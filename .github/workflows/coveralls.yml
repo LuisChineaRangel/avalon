@@ -1,0 +1,64 @@
+name: Coveralls
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    coveralls-server:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Cloning repo
+              uses: actions/checkout@v2
+
+            - name: Use Node.js 20.x for Server Side
+              uses: actions/setup-node@v2
+              with:
+                  node-version: 20.x
+                  cache: "npm"
+                  cache-dependency-path: "./server/package-lock.json"
+
+            - name: Installing dependencies
+              run: npm install
+              working-directory: ./server
+
+            - name: Generating coverage information
+              run: npm run coveralls
+              working-directory: ./server
+
+            - name: Coveralls GitHub Action
+              uses: coverallsapp/github-action@v2.3.0
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  path-to-lcov: ./server/coverage/lcov.info
+
+    coveralls-client:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Cloning repo
+              uses: actions/checkout@v2
+
+            - name: Use Node.js 20.x for Client Side
+              uses: actions/setup-node@v2
+              with:
+                  node-version: 20.x
+                  cache: "npm"
+                  cache-dependency-path: "./client/package-lock.json"
+
+            - name: Installing dependencies
+              run: npm install
+              working-directory: ./client
+
+            - name: Generating coverage information
+              run: npm run coveralls
+              working-directory: ./client
+
+            - name: Coveralls GitHub Action
+              uses: coverallsapp/github-action@v2.3.0
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  path-to-lcov: ./client/coverage/lcov.info

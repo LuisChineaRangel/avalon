@@ -1,0 +1,43 @@
+{
+    "name": "avalon-server",
+    "version": "1.0.0",
+    "main": "main.js",
+    "author": "Luis Chinea Rangel",
+    "license": "ISC",
+    "description": "Avalon App Backend",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/iluzioDev/avalon"
+    },
+    "bugs": {
+        "url": "https://github.com/iluzioDev/avalon/issues"
+    },
+    "homepage": "https://github.com/iluzioDev/avalon#readme",
+    "scripts": {
+        "build": "npm install && tsc && tsc-alias",
+        "start": "node ./dist/server/src/main.js",
+        "watch": "tsc-watch --onSuccess ./dist/server/src/main.js",
+        "test": "mocha --exit --coverage",
+        "coveralls": "nyc npm test && nyc report --reporter=lcov"
+    },
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "jsonwebtoken": "^9.0.2",
+        "mongoose": "^8.4.1",
+        "tsc-alias": "^1.8.10"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.3.16",
+        "@types/express": "^4.17.21",
+        "@types/jsonwebtoken": "^9.0.6",
+        "@types/mocha": "^10.0.6",
+        "chai": "^5.1.1",
+        "coveralls": "^3.1.1",
+        "mocha": "^10.4.0",
+        "nyc": "^15.1.0",
+        "tsc-watch": "^6.2.0",
+        "typescript": "^5.4.5"
+    }
+}

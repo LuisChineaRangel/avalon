@@ -1,0 +1,17 @@
+:host {
+    --white: oklch(100% 0.001 0);
+}
+
+// * {
+//     color: var(--white);
+// }
+
+:root {
+    --background: rgb(247, 247, 247);
+    --black-1: rgb(12, 12, 12);
+    --black-2: rgb(32, 32, 32);
+    --grey: rgb(129, 133, 137);
+    --color-1: rgb(107, 77, 184);
+    --color-2: rgb(156, 141, 195);
+    --color-3: rgb(242, 199, 91)
+}

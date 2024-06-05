@@ -1,0 +1,35 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { Post } from '@shared/interfaces/post.interface';
+
+import { SERVER_URL } from 'src/utils/app.constants';
+
+@Injectable({
+    providedIn: 'root'
+})
+
+export class PostService {
+    private postURL = `${SERVER_URL}/posts`;
+
+    constructor(private http: HttpClient) {
+
+    }
+
+    getPosts(): Observable<Post[]> {
+        return this.http.get<Post[]>(this.postURL);
+    }
+
+    getPost(id: string): Observable<Post> {
+        return this.http.get<Post>(`${this.postURL}/${id}`);
+    }
+
+    deletePost(id: string): Observable<Post> {
+        return this.http.delete<Post>(`${this.postURL}/${id}`);
+    }
+
+    patchPost(id: string, formData: FormData): Observable<Post> {
+        return this.http.patch<Post>(`${this.postURL}/${id}`, formData);
+    }
+}
