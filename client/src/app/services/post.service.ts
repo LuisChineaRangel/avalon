@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Post } from '@shared/interfaces/post.interface';
-
 import { SERVER_URL } from 'src/utils/app.constants';
 
 @Injectable({

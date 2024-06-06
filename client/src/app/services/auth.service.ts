@@ -1,19 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { SERVER_URL } from '@utils/app.constants';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 @Injectable({
     providedIn: 'root'
 })
 
+
+
 export class AuthService {
-    private signUpUrl = `${SERVER_URL}/sign-up`;
-    private signInUrl = `${SERVER_URL}/sign-in`;
+    serverUrl = process.env["SERVER_URL"] || 'http://localhost:3000';
+    private signUpUrl = this.serverUrl + '/sign-up';
+    private signInUrl = this.serverUrl + '/sign-in';
 
     constructor(private http: HttpClient, private router: Router) { }
 
     signUp(userData: FormData) {
+
         return this.http.post<any>(this.signUpUrl, userData);
     }
 

@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { User } from '@shared/interfaces/user.interface';
-import { SERVER_URL } from '@utils/app.constants';
+import { SERVER_URL } from 'src/utils/app.constants';
 
 @Injectable({
     providedIn: 'root'
 })
 
 export class UserService {
-    private userURL = `${SERVER_URL}/users`
+    private userURL = `${SERVER_URL}/users`;
 
     constructor(private http: HttpClient) { }
 
