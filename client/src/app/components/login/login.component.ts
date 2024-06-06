@@ -11,5 +11,5 @@ import { MaterialModule } from '@app/material.module';
     styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-
+    title: string = 'Avalon';
 }

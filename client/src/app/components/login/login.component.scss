@@ -13,6 +13,14 @@
     max-width: 25rem;
 }
 
+.summary {
+    margin: 1.5rem 0;
+}
+
+mat-card-actions > * {
+    margin-right: 1rem;
+}
+
 @media screen and (max-width: 640px) {
     .banner {
         flex-direction: column;
