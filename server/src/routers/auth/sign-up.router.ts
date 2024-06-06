@@ -11,6 +11,7 @@ signUpRouter.use(bodyParser.json());
 signUpRouter.post('/sign-up', async (req, res) => {
     const body = req.body;
     const user = new User({ username: body.username, first_name: body.first_name, last_name: body.last_name, email: body.email, phone_number: body.phone_number, password: body.password, role: body.role });
+    console.log('User: ', user);
     await user.save().then((user) => {
         if (!user)
             return res.status(404).json({ message: 'User not found' });
