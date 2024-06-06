@@ -6,7 +6,6 @@ export interface User {
     email: string;
     phone_number: string;
     password: string;
-    role: string;
     followers?: User[];
     following?: User[];
     created_at: Date;

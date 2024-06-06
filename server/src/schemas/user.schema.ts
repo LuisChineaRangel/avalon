@@ -8,7 +8,6 @@ const UserSchema = new Schema<User>({
     email: { type: String, required: true, unique: true },
     phone_number: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    role: { type: String, required: true },
     followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     following: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     created_at: { type: Date, default: Date.now },
