@@ -8,5 +8,5 @@ import { routes } from 'src/app/app.routes';
 import { AppComponent } from 'src/app/app.component';
 
 bootstrapApplication(AppComponent, {
-    providers: [importProvidersFrom(RouterModule.forRoot(routes)), provideAnimationsAsync(), provideHttpClient()]
+    providers: [importProvidersFrom(RouterModule.forRoot(routes)), provideAnimationsAsync(), provideHttpClient(), provideAnimationsAsync()]
 }).catch(err => console.error(err));

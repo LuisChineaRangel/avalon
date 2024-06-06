@@ -1,4 +1,20 @@
-.nav-link:hover .nav-text {
-    text-decoration: underline;
-    opacity: 0.75;
+@import "./../../../styles.scss";
+
+:host {
+    --sidebar-link: var(--black);
+}
+
+mat-nav-list {
+    padding-top: 0;
+    width: 100%;
+}
+
+a {
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+a mat-icon {
+    margin-right: 0.5rem;
 }

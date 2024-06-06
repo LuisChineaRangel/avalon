@@ -1,0 +1,20 @@
+.banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10%;
+}
+
+.banner mat-card {
+    padding: 2rem;
+}
+
+.logo-container img {
+    max-width: 25rem;
+}
+
+@media screen and (max-width: 640px) {
+    .banner {
+        flex-direction: column;
+    }
+}

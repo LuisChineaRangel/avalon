@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 
 import '@db/mongoose';
 
@@ -21,6 +22,7 @@ app.use(function (_, res, next) {
     next();
 });
 
+app.use(cors());
 app.use(signInRouter);
 app.use(signUpRouter);
 app.use(userRouter);

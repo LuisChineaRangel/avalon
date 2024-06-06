@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { Router } from '@angular/router';
 
+import { AppModule } from './app.module';
 import { AuthService } from '@services/auth.service';
-import { SidebarComponent } from '@components/sidebar/sidebar.component';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [CommonModule, RouterOutlet, SidebarComponent],
+    imports: [AppModule],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
 
 export class AppComponent implements OnInit {
-    title = 'Avalon';
+    title: string = 'Avalon';
+    opened: boolean = true;
+    isDarkTheme: boolean = false;
+    constructor(public auth: AuthService, public router: Router) { }
 
-    constructor(public auth : AuthService) {}
-
-    ngOnInit(): void {}
+    ngOnInit(): void { }
 }

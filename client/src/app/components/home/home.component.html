@@ -1,14 +1,19 @@
-<mat-card *ngFor="let post of feed">
-    <mat-card-header>
-        <mat-card-title>{{ post.title }}</mat-card-title>
-        <mat-card-subtitle>Posted by {{ post.author }} on {{ post.created_at | date }}</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image [src]="post.featured_image" alt="{{ post.title }}">
-    <mat-card-content>
-        <p>{{ post.content }}</p>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
-    </mat-card-actions>
-</mat-card>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <mat-card *ngFor="let post of feed">
+                <mat-card-header>
+                    <mat-card-title>{{ post.author }}</mat-card-title>
+                    <mat-card-subtitle>{{ post.created_at | date }}</mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                    <p>{{ post.content }}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button>Like</button>
+                    <button mat-button>Retweet</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

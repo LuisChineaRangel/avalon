@@ -1,24 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControlOptions } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 
 import { AuthService } from '@services/auth.service';
+import { MaterialModule } from '@app/material.module';
 
 @Component({
     selector: 'app-sign-up',
     standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule],
+    imports: [CommonModule, ReactiveFormsModule, MaterialModule, RouterModule],
     templateUrl: './sign-up.component.html',
-    styleUrl: './sign-up.component.scss'
+    styleUrl: './../auth.component.scss'
 })
 
 export class SignUpComponent implements OnInit {
+    hide: boolean = true;
     signUpForm: FormGroup;
-    error_message: string = '';
+    error_message: string = '\u00A0';
 
     formFields = [
         { label: 'Username', name: 'username' },
@@ -39,15 +38,14 @@ export class SignUpComponent implements OnInit {
             phone_number: ['', Validators.required],
             password: ['', Validators.required],
             confirmPassword: ['', Validators.required],
-            acceptTerms: [false, Validators.requiredTrue]
         }, { validators: this.passwordValidator } as AbstractControlOptions);
     }
 
     ngOnInit(): void { }
 
     signUp(): void {
-        if (this.signUpForm.invalid || this.signUpForm.get('acceptTerms')?.value === false) {
-            this.error_message = 'Please fill out all required fields and accept the terms';
+        if (this.signUpForm.invalid) {
+            this.error_message = 'Please fill out all required fields';
             return;
         }
 
@@ -55,6 +53,7 @@ export class SignUpComponent implements OnInit {
             .subscribe({
                 next: (response: any) => {
                     localStorage.setItem('token', response.token);
+                    console.log(response);
                     this.router.navigate(['/']);
                 },
                 error: (error: any) => {

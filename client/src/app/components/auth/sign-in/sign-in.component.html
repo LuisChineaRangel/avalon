@@ -1,23 +1,25 @@
-<div class="form" [formGroup]="signInForm">
-    <mat-card class="form-card">
+<div class="form">
+    <mat-card>
         <mat-card-title>Sign In</mat-card-title>
         <mat-card-content>
             <form [formGroup]="signInForm" (ngSubmit)="signIn()">
-                <ng-container *ngFor="let field of formFields">
-                    <mat-form-field class="full-width">
-                        <mat-label>{{ field.label }}</mat-label>
-                        <input matInput [formControlName]="field.name" required>
-                        <mat-error *ngIf="signInForm.get(field.name)?.hasError('required')">
-                            {{ field.label }} is required
-                        </mat-error>
-                    </mat-form-field>
-                </ng-container>
-                <button mat-raised-button color="primary" type="submit">Sign In</button>
+                <div class="fields">
+                    <ng-container *ngFor="let field of formFields">
+                        <mat-form-field class="full-width">
+                            <mat-label>{{ field.label }}</mat-label>
+                            <input matInput [formControlName]="field.name" required>
+                            <mat-error *ngIf="signInForm.get(field.name)?.hasError('required')">
+                                {{ field.label }} is required
+                            </mat-error>
+                        </mat-form-field>
+                    </ng-container>
+                </div>
+                <div class="actions">
+                    <p *ngIf="error_message">{{ error_message }}</p>
+                    <a routerLink="/sign-up">Don't have an account? Sign Up</a>
+                    <button mat-raised-button color="primary" type="submit">Sign In</button>
+                </div>
             </form>
-        </mat-card-content>
-        <mat-card-content>
-            <p *ngIf="error_message">{{ error_message }}</p>
-            <a routerLink="/sign-up">Don't have an account? Sign Up</a>
         </mat-card-content>
     </mat-card>
 </div>

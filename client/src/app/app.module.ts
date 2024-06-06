@@ -1,22 +1,23 @@
-import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { provideHttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { provideHttpClient } from '@angular/common/http';
 
-import { AppRoutingModule } from './app.routes';
+// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { AppRoutingModule } from '@app/app.routes';
+import { MaterialModule } from '@app/material.module';
+import { SidebarComponent } from '@components/sidebar/sidebar.component';
 import { AuthService } from '@services/auth.service';
 
 @NgModule({
     declarations: [],
     imports: [
-        BrowserModule,
         CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        MaterialModule,
+        SidebarComponent,
     ],
+    exports: [CommonModule, AppRoutingModule, MaterialModule, SidebarComponent],
     providers: [AuthService, provideHttpClient()],
 })
 

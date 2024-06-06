@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { jwtDecode } from 'jwt-decode';
 
 import { Post } from '@shared/interfaces/post.interface';
 import { PostService } from '@services/post.service';
+import { SidebarComponent } from '@components/sidebar/sidebar.component';
 import { AuthService } from '@services/auth.service';
 
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [CommonModule, MatCardModule],
+    imports: [CommonModule, MatCardModule, SidebarComponent, RouterModule, RouterOutlet],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss'
 })
@@ -20,14 +22,24 @@ export class HomeComponent implements OnInit {
     user: any;
     feed: Post[] = [];
 
-    constructor(private AuthService: AuthService, private PostService: PostService) { }
+    constructor(public auth: AuthService, public router: Router, private PostService: PostService) { }
 
     ngOnInit(): void {
-        this.token = this.AuthService.getToken();
+        this.token = this.auth.getToken();
 
-        if (!this.token)
+        if (!this.token) {
+            this.router.navigate(['/login']);
             return;
-        this.token = jwtDecode(this.token);
+        }
+
+        try {
+            this.token = jwtDecode(this.token);
+        } catch (error) {
+            console.error('Token inválido:', error);
+            this.router.navigate(['/login']);
+            return;
+        }
+
         this.user = this.token.user;
 
         this.PostService.getPosts().subscribe({
