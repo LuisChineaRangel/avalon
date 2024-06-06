@@ -17,6 +17,7 @@ signUpRouter.post('/sign-up', async (req, res) => {
         const token = jwt.sign({ email: user.email, role: user.role }, 'secret');
         return res.status(200).json({ token });
     }).catch((err) => {
+        console.log('Error: ', err);
         console.log(err);
         if (err.code === 11000)
             return res.status(409).json({ message: 'User already exists' });
