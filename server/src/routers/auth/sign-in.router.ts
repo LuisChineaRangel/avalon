@@ -16,6 +16,7 @@ signInRouter.post('/sign-in', async (req, res) => {
     if (user.password !== password)
         return res.status(401).json({ message: 'Invalid password' });
 
-    const token = jwt.sign({ user }, 'secret', { expiresIn: '30d' });
+    const id = user._id;
+    const token = jwt.sign({ id }, 'secret', { expiresIn: '30d' });
     return res.status(200).json({ token });
 });

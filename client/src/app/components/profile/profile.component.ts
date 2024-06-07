@@ -25,7 +25,17 @@ export class ProfileComponent implements OnInit {
     ngOnInit(): void {
         this.token = this.auth.getToken();
         this.token = jwtDecode(this.token);
-        this.user = this.token.user;
+        console.log(this.token);
+        this.userSvc.getUser(this.token.id).subscribe({
+            next: (response: any) => {
+                this.user = response;
+                console.log(response);
+            },
+            error: (error: any) => {
+                console.log(error);
+            }
+        });
+        console.log(this.user);
     }
 
     save(): void {
@@ -33,6 +43,7 @@ export class ProfileComponent implements OnInit {
         this.userSvc.patchUser(this.user._id, this.user)
             .subscribe({
                 next: (response: any) => {
+                    window.location.reload();
                     console.log(response);
                 },
                 error: (error: any) => {

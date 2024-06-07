@@ -14,7 +14,8 @@ signUpRouter.post('/sign-up', async (req, res) => {
     await user.save().then((user) => {
         if (!user)
             return res.status(404).json({ message: 'User not found' });
-        const token = jwt.sign({ user }, 'secret', { expiresIn: '30d' });
+        const id = user._id;
+        const token = jwt.sign({ id }, 'secret', { expiresIn: '30d' });
         return res.status(200).json({ token });
     }).catch((err) => {
         console.log(err);
