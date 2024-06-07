@@ -1,1 +1,6 @@
 @import '../../../styles.scss';
+
+.actions {
+    flex-direction: row !important;
+    justify-content: start !important;
+}

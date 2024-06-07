@@ -20,9 +20,6 @@ export class SidebarComponent implements OnInit {
     ngOnInit(): void {}
 
     logout(): void {
-        this.auth.removeToken();
-        this.router.navigate(['/login']).then(() => {
-            window.location.href = '/login';
-        });
+        this.auth.logout();
     }
 }

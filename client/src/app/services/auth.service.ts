@@ -32,12 +32,10 @@ export class AuthService {
         return localStorage.getItem('token');
     }
 
-    removeToken() {
-        localStorage.removeItem('token');
-    }
-
     logout() {
         localStorage.removeItem('token');
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']).then(() => {
+            window.location.href = '/login';
+        });
     }
 }

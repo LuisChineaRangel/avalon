@@ -4,15 +4,23 @@
         <mat-card-content>
             <form [formGroup]="signInForm" (ngSubmit)="signIn()">
                 <div class="fields">
-                    <ng-container *ngFor="let field of formFields">
-                        <mat-form-field class="full-width">
-                            <mat-label>{{ field.label }}</mat-label>
-                            <input matInput [formControlName]="field.name" required>
-                            <mat-error *ngIf="signInForm.get(field.name)?.hasError('required')">
-                                {{ field.label }} is required
-                            </mat-error>
-                        </mat-form-field>
-                    </ng-container>
+                    <mat-form-field class="full-width">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" required>
+                        <mat-error *ngIf="signInForm.get('email')?.hasError('required')">
+                            Email is required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Password</mat-label>
+                        <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" required>
+                        <mat-error *ngIf="signInForm.get('password')?.hasError('required')">
+                            Password is required
+                        </mat-error>
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'">
+                            <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                        </button>
+                    </mat-form-field>
                 </div>
                 <div class="actions">
                     <p *ngIf="error_message">{{ error_message }}</p>

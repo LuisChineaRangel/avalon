@@ -15,6 +15,7 @@ import { MaterialModule } from '@app/material.module';
 })
 
 export class SignInComponent implements OnInit {
+    hide: boolean = true;
     signInForm: FormGroup;
     error_message: string = '\u00A0';
 

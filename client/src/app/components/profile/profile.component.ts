@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { AuthService } from '@services/auth.service';
 import { MaterialModule } from '@app/material.module';
 import { jwtDecode } from 'jwt-decode';
+
+import { AuthService } from '@services/auth.service';
+import { UserService } from '@app/services/user.service';
 
 @Component({
     selector: 'app-profile',
@@ -19,7 +20,7 @@ export class ProfileComponent implements OnInit {
     user: any;
     editing: boolean = false;
 
-    constructor(public auth: AuthService, public router: Router) { }
+    constructor(public auth: AuthService, public router: Router, public userSvc: UserService) { }
 
     ngOnInit(): void {
         if (!this.auth.loggedIn()) {
@@ -30,11 +31,19 @@ export class ProfileComponent implements OnInit {
         this.token = this.auth.getToken();
         this.token = jwtDecode(this.token);
         this.user = this.token.user;
-        console.log(this.token);
     }
 
     save(): void {
         this.editing = false;
+        this.userSvc.patchUser(this.user._id, this.user)
+            .subscribe({
+                next: (response: any) => {
+                    console.log(response);
+                },
+                error: (error: any) => {
+                    console.log(error);
+                }
+            });
     }
 
     cancel(): void {
