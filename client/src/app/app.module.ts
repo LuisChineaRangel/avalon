@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { provideHttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from '@app/app.routes';
 import { MaterialModule } from '@app/material.module';
 import { SidebarComponent } from '@components/sidebar/sidebar.component';
 import { AuthService } from '@services/auth.service';
-import { TokenInterceptorService } from './services/token-interceptor.service';
+import { AuthInterceptor } from '@services/auth-interceptor.service';
 
 @NgModule({
     declarations: [],
@@ -17,9 +17,9 @@ import { TokenInterceptorService } from './services/token-interceptor.service';
         SidebarComponent,
     ],
     exports: [CommonModule, AppRoutingModule, MaterialModule, SidebarComponent],
-    providers: [AuthService, provideHttpClient(), {
+    providers: [AuthService, {
         provide: HTTP_INTERCEPTORS,
-        useClass: TokenInterceptorService,
+        useClass: AuthInterceptor,
         multi: true
     }],
 })
