@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/material.module';
+
+import { AuthService } from '@services/auth.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -10,6 +12,17 @@ import { MaterialModule } from '@app/material.module';
     styleUrl: './sidebar.component.scss'
 })
 
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
     title: string = 'Avalon';
+
+    constructor(public auth: AuthService, public router: Router) { }
+
+    ngOnInit(): void {}
+
+    logout(): void {
+        this.auth.removeToken();
+        this.router.navigate(['/login']).then(() => {
+            window.location.href = '/login';
+        });
+    }
 }

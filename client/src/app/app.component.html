@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar *ngIf="isAuthenticated">
     <button mat-icon-button (click)="opened = !opened">
         <mat-icon>menu</mat-icon>
     </button>
@@ -11,10 +11,10 @@
     </mat-nav-list>
 </mat-toolbar>
 <mat-sidenav-container>
-    <mat-sidenav [(opened)]="opened" mode="side">
+    <mat-sidenav [(opened)]="opened" mode="side" *ngIf="isAuthenticated">
             <app-sidebar></app-sidebar>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content [ngClass]="{'authenticated': isAuthenticated}">
         <router-outlet></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>

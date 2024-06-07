@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { AppRoutingModule } from '@app/app.routes';
 import { MaterialModule } from '@app/material.module';
 import { SidebarComponent } from '@components/sidebar/sidebar.component';

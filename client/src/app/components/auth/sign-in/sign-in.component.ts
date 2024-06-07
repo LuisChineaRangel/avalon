@@ -11,7 +11,7 @@ import { MaterialModule } from '@app/material.module';
     standalone: true,
     imports: [CommonModule, ReactiveFormsModule, MaterialModule, RouterModule],
     templateUrl: './sign-in.component.html',
-    styleUrl: './../auth.component.scss'
+    styleUrl: './sign-in.component.scss'
 })
 
 export class SignInComponent implements OnInit {
@@ -42,7 +42,9 @@ export class SignInComponent implements OnInit {
             .subscribe({
                 next: (response: any) => {
                     localStorage.setItem('token', response.token);
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/']).then(() => {
+                        window.location.href = '/';
+                    });
                 },
                 error: (error: any) => {
                     this.error_message = error.error.message;

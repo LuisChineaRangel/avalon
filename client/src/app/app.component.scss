@@ -1,5 +1,9 @@
 @import "./../styles.scss";
 
+mat-sidenav-container {
+    height: 100vh;
+}
+
 mat-toolbar {
     position: fixed;
     height: 10vh;
@@ -40,9 +44,16 @@ app-sidebar {
 }
 
 mat-sidenav-content {
-    margin-top: 10vh;
     min-width: 80%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+mat-sidenav-content .authenticated {
+    margin-top: 10vh;
 }
 
 @media screen and (max-width: 640px) {

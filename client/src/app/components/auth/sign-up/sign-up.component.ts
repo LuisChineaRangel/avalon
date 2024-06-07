@@ -11,23 +11,13 @@ import { MaterialModule } from '@app/material.module';
     standalone: true,
     imports: [CommonModule, ReactiveFormsModule, MaterialModule, RouterModule],
     templateUrl: './sign-up.component.html',
-    styleUrl: './../auth.component.scss'
+    styleUrl: './sign-up.component.scss'
 })
 
 export class SignUpComponent implements OnInit {
     hide: boolean = true;
     signUpForm: FormGroup;
     error_message: string = '\u00A0';
-
-    formFields = [
-        { label: 'Username', name: 'username' },
-        { label: 'First Name', name: 'first_name' },
-        { label: 'Last Name', name: 'last_name' },
-        { label: 'Email', name: 'email' },
-        { label: 'Phone Number', name: 'phone_number' },
-        { label: 'Password', name: 'password' },
-        { label: 'Confirm Password', name: 'confirmPassword' },
-    ];
 
     constructor(private auth: AuthService, private router: Router, formBuilder: FormBuilder) {
         this.signUpForm = formBuilder.group({
@@ -53,8 +43,9 @@ export class SignUpComponent implements OnInit {
             .subscribe({
                 next: (response: any) => {
                     localStorage.setItem('token', response.token);
-                    console.log(response);
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/']).then(() => {
+                        window.location.href = '/';
+                    });
                 },
                 error: (error: any) => {
                     this.error_message = error.error.message;

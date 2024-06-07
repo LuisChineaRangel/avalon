@@ -1,8 +1,10 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
 :host {
-    --white: oklch(100% 0.001 0);
-    --black: oklch(0% 0.001 0);
+    --white: rgba(255, 255, 255, 1);
+    --black: rgba(0, 0, 0, 1);
+
+    --error: rgba(244, 67, 54, 1);
 
     font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
@@ -10,21 +12,62 @@
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    display: block;
+    height: 100%;
+    width: 100%;
 }
 
-html, body {
+html,
+body,
+app-root {
+    margin: 0;
+    padding: 0;
+}
+
+.form {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     height: 100%;
 }
 
-body {
-    margin: 0;
+.form mat-card {
+    padding: 2rem;
 }
 
-body > app-root {
+.form mat-card-title {
+    margin-bottom: 1rem;
+}
+
+.form mat-form-field {
+    padding: 0.5rem;
+}
+
+.form .fields,
+.form .actions {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.form .fields>*,
+.form .actions>* {
+    margin: 0.5rem;
+}
+
+.form .actions a,
+.form .actions a:visited,
+.form .actions a:active {
+    text-decoration: none;
+    color: inherit;
+}
+
+.form .actions a:hover {
+    text-decoration: underline;
+}
+
+.form .actions p {
+    color: var(--error);
+}

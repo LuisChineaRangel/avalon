@@ -1,0 +1,34 @@
+<div class="profile form">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>User Profile</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <form>
+                <div>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="Name" [disabled]="!editing" [(ngModel)]="user.name">
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Surname</mat-label>
+                        <input matInput placeholder="Surname" [disabled]="!editing">
+                    </mat-form-field>
+                </div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Email" [disabled]="!editing">
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput placeholder="Phone Number" [disabled]="!editing">
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-flat-button color="primary" (click)="editing = true" *ngIf="!editing">Edit Profile</button>
+            <button mat-flat-button color="primary" (click)="save()" *ngIf="editing">Save Changes</button>
+            <button mat-stroked-button color="primary" (click)="cancel()" *ngIf="editing">Cancel</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

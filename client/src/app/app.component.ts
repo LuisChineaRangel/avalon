@@ -16,7 +16,13 @@ export class AppComponent implements OnInit {
     title: string = 'Avalon';
     opened: boolean = true;
     isDarkTheme: boolean = false;
+    isAuthenticated: boolean = false;
     constructor(public auth: AuthService, public router: Router) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        if (this.auth.loggedIn())
+            this.isAuthenticated = true;
+        else
+            this.router.navigate(['/login']);
+    }
 }

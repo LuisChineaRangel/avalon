@@ -17,7 +17,6 @@ export class AuthService {
     constructor(private http: HttpClient, private router: Router) { }
 
     signUp(userData: FormData) {
-
         return this.http.post<any>(this.signUpUrl, userData);
     }
 
@@ -31,6 +30,10 @@ export class AuthService {
 
     getToken() {
         return localStorage.getItem('token');
+    }
+
+    removeToken() {
+        localStorage.removeItem('token');
     }
 
     logout() {

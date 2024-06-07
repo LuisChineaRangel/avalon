@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 import { VideoGame } from '@shared/interfaces/videogame.interface';
 
 const VideoGameSchema = new Schema<VideoGame>({
-    name : { type: String, required: true },
+    name : { type: String, required: true, unique: true },
     description : { type: String, required: true },
     release_date : { type: Date, required: true },
     rating : { type: Number, required: true },
