@@ -5,7 +5,6 @@ import { AppRoutingModule } from '@app/app.routes';
 import { MaterialModule } from '@app/material.module';
 import { SidebarComponent } from '@components/sidebar/sidebar.component';
 import { AuthService } from '@services/auth.service';
-import { AuthInterceptor } from '@services/auth-interceptor.service';
 
 @NgModule({
     declarations: [],
@@ -16,13 +15,6 @@ import { AuthInterceptor } from '@services/auth-interceptor.service';
         SidebarComponent
     ],
     exports: [CommonModule, AppRoutingModule, MaterialModule, SidebarComponent],
-    providers: [
-        AuthService,
-        {
-            provide: 'HTTP_INTERCEPTORS',
-            useClass: AuthInterceptor,
-            multi: true
-        }
-    ]
+    providers: [AuthService]
 })
 export class AppModule { }

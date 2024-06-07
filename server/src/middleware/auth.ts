@@ -6,7 +6,7 @@ interface RequestWithUser extends Request {
 }
 
 export default function auth(req: RequestWithUser, res: Response, next: NextFunction) {
-    console.log(req.header);
+    console.log(req.header("Authorization"));
     const authHeader = req.header("Authorization");
     if (!authHeader)
         return res.status(401).send("Access denied. No token provided.");
