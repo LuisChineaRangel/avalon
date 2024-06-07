@@ -28,14 +28,13 @@ export class ProfileComponent implements OnInit {
         console.log(this.token);
         this.userSvc.getUser(this.token.id).subscribe({
             next: (response: any) => {
-                this.user = response;
+                this.user = response.
                 console.log(response);
             },
             error: (error: any) => {
                 console.log(error);
             }
         });
-        console.log(this.user);
     }
 
     save(): void {
