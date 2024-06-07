@@ -27,18 +27,13 @@ export class HomeComponent implements OnInit {
     ngOnInit(): void {
         this.token = this.auth.getToken();
 
-        if (!this.token) {
-            this.router.navigate(['/login']);
-            return;
-        }
-
-        try {
-            this.token = jwtDecode(this.token);
-        } catch (error) {
-            console.error('Token inválido:', error);
-            this.router.navigate(['/login']);
-            return;
-        }
+        // try {
+        //     this.token = jwtDecode(this.token);
+        // } catch (error) {
+        //     console.error('Token inválido:', error);
+        //     this.router.navigate(['/login']);
+        //     return;
+        // }
 
         this.user = this.token.user;
 

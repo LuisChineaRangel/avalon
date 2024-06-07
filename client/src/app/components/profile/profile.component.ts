@@ -23,11 +23,6 @@ export class ProfileComponent implements OnInit {
     constructor(public auth: AuthService, public router: Router, public userSvc: UserService) { }
 
     ngOnInit(): void {
-        if (!this.auth.loggedIn()) {
-            this.router.navigate(['/login']);
-            return;
-        }
-
         this.token = this.auth.getToken();
         this.token = jwtDecode(this.token);
         this.user = this.token.user;

@@ -22,7 +22,5 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         if (this.auth.loggedIn())
             this.isAuthenticated = true;
-        else
-            this.router.navigate(['/login']);
     }
 }

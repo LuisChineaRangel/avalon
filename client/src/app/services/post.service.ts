@@ -12,9 +12,7 @@ import { SERVER_URL } from 'src/utils/app.constants';
 export class PostService {
     private postURL = `${SERVER_URL}/posts`;
 
-    constructor(private http: HttpClient) {
-
-    }
+    constructor(private http: HttpClient) { }
 
     getPosts(): Observable<Post[]> {
         return this.http.get<Post[]>(this.postURL);

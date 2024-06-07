@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from '@app/app.routes';
 import { MaterialModule } from '@app/material.module';
@@ -14,14 +13,16 @@ import { AuthInterceptor } from '@services/auth-interceptor.service';
         CommonModule,
         AppRoutingModule,
         MaterialModule,
-        SidebarComponent,
+        SidebarComponent
     ],
     exports: [CommonModule, AppRoutingModule, MaterialModule, SidebarComponent],
-    providers: [AuthService, {
-        provide: HTTP_INTERCEPTORS,
-        useClass: AuthInterceptor,
-        multi: true
-    }],
+    providers: [
+        AuthService,
+        {
+            provide: 'HTTP_INTERCEPTORS',
+            useClass: AuthInterceptor,
+            multi: true
+        }
+    ]
 })
-
 export class AppModule { }

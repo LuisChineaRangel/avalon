@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 import { SERVER_URL } from 'src/utils/app.constants';
 
@@ -8,13 +7,11 @@ import { SERVER_URL } from 'src/utils/app.constants';
     providedIn: 'root'
 })
 
-
-
 export class AuthService {
     private signUpUrl = `${SERVER_URL}/sign-up`;
     private signInUrl = `${SERVER_URL}/sign-in`;
 
-    constructor(private http: HttpClient, private router: Router) { }
+    constructor(private http: HttpClient) { }
 
     signUp(userData: FormData) {
         return this.http.post<any>(this.signUpUrl, userData);
@@ -34,8 +31,6 @@ export class AuthService {
 
     logout() {
         localStorage.removeItem('token');
-        this.router.navigate(['/login']).then(() => {
-            window.location.href = '/login';
-        });
+        window.location.reload();
     }
 }

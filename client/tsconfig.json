@@ -23,6 +23,7 @@
         "paths": {
             "@shared/*": ["../shared/*"],
             "@app/*": ["./src/app/*"],
+            "@guards/*": ["./src/app/guards/*"],
             "@services/*": ["./src/app/services/*"],
             "@components/*": ["./src/app/components/*"],
             "@utils/*": ["./src/utils/*"],
