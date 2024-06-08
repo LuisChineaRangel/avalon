@@ -1,5 +1,3 @@
-import { Post } from "./post.interface";
-
 export interface User {
     username: string;
     first_name: string;
@@ -8,7 +6,7 @@ export interface User {
     phone_number: string;
     password: string;
     profileImage: string;
-    posts?: Post[];
+    posts?: string[];
     followers?: string[];
     following?: string[];
     created_at: Date;
