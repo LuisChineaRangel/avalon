@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { lastValueFrom } from 'rxjs';
 import { MaterialModule } from '@app/material.module';
 
 import { UserService } from '@services/user.service';
@@ -33,11 +34,12 @@ export class NewPostComponent implements OnInit {
         let data = this.newPostForm.value;
         let user = await this.userSvc.getCurrentUser();
         data.author = user.username;
-        await console.log(data);
-        this.postSvc.postPost(data).subscribe(() => {
+        try {
+            await lastValueFrom(this.postSvc.postPost(data));
             this.router.navigate(['/']);
-        }, (err) => {
+        }
+        catch (err) {
             console.error(err);
-        });
+        }
     }
 }
