@@ -21,15 +21,15 @@ export class AuthService {
         return this.http.post<any>(this.signInUrl, user);
     }
 
-    loggedIn() {
+    loggedIn() : boolean {
         return !!localStorage.getItem('token');
     }
 
-    getToken() {
+    getToken() : any {
         return localStorage.getItem('token');
     }
 
-    logout() {
+    logout() : void {
         localStorage.removeItem('token');
         window.location.reload();
     }

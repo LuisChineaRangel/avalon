@@ -1,11 +1,7 @@
-import { User } from './user.interface';
-import { VideoGame } from './videogame.interface';
 import { Comment } from './comment.interface';
 
 export interface Post {
-    id: string;
-    author: User;
-    game: VideoGame;
+    author: string;
     title: string;
     content: string;
     comments?: Comment[];

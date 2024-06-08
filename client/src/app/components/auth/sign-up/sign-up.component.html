@@ -1,10 +1,10 @@
 <div class="form" [formGroup]="signUpForm">
-    <mat-card class="form-card justify-content-center">
+    <mat-card>
         <mat-card-title>Sign Up</mat-card-title>
         <mat-card-content>
             <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
                 <div class="fields">
-                    <mat-form-field class="full-width px-2">
+                    <mat-form-field >
                         <input matInput formControlName="username" placeholder="Username">
                         <mat-error *ngIf="signUpForm.get('username')?.hasError('required')">
                             Username is required
@@ -12,13 +12,13 @@
                     </mat-form-field>
                 </div>
                 <div>
-                    <mat-form-field class="full-width px-2">
+                    <mat-form-field >
                         <input matInput formControlName="first_name" placeholder="First Name">
                         <mat-error *ngIf="signUpForm.get('first_name')?.hasError('required')">
                             First Name is required
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="full-width px-2">
+                    <mat-form-field >
                         <input matInput formControlName="last_name" placeholder="Last Name">
                         <mat-error *ngIf="signUpForm.get('last_name')?.hasError('required')">
                             Last Name is required
@@ -26,13 +26,13 @@
                     </mat-form-field>
                 </div>
                 <div>
-                    <mat-form-field class="full-width px-2">
+                    <mat-form-field >
                         <input matInput formControlName="email" placeholder="Email">
                         <mat-error *ngIf="signUpForm.get('email')?.hasError('required')">
                             Email is required
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="full-width px-2">
+                    <mat-form-field >
                         <input matInput formControlName="phone_number" placeholder="Phone Number">
                         <mat-error *ngIf="signUpForm.get('phone_number')?.hasError('required')">
                             Phone Number is required
@@ -40,14 +40,14 @@
                     </mat-form-field>
                 </div>
                 <div>
-                    <mat-form-field class="full-width px-2">
+                    <mat-form-field >
                         <input matInput formControlName="password" placeholder="Password"
                             [type]="hide ? 'password' : 'text'">
                         <mat-error *ngIf="signUpForm.get('password')?.hasError('required')">
                             Password is required
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="full-width px-2">
+                    <mat-form-field >
                         <input matInput formControlName="confirmPassword" placeholder="Confirm Password"
                             [type]="hide ? 'password' : 'text'">
                         <mat-error *ngIf="signUpForm.get('confirmPassword')?.hasError('required')">

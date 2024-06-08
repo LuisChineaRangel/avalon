@@ -2,8 +2,7 @@ import { Schema, model } from 'mongoose';
 import { Post } from '@shared/interfaces/post.interface';
 
 const PostSchema = new Schema<Post>({
-    author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    game: { type: Schema.Types.ObjectId, ref: 'VideoGame', required: true },
+    author: { type: String, required: true },
     title: { type: String, required: true },
     content: { type: String, required: true },
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],

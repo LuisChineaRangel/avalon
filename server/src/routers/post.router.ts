@@ -43,6 +43,20 @@ postRouter.get('/posts/:id', auth, async (req, res) => {
     }
 });
 
+postRouter.post('/posts', auth, async (req, res) => {
+    try {
+        await Post.create(req.body).then((post) => {
+            return res.status(201).send(post);
+        }).catch((err) => {
+            console.log(err);
+            return res.status(500).send('Internal server error');
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Internal server error');
+    }
+});
+
 postRouter.delete('/posts/:id', auth, async (req, res) => {
     try {
         await Post.findByIdAndDelete(req.params.id).then((post) => {

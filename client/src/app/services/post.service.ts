@@ -22,6 +22,10 @@ export class PostService {
         return this.http.get<Post>(`${this.postURL}/${id}`);
     }
 
+    postPost(formData: FormData): Observable<Post> {
+        return this.http.post<Post>(this.postURL, formData);
+    }
+
     deletePost(id: string): Observable<Post> {
         return this.http.delete<Post>(`${this.postURL}/${id}`);
     }

@@ -1,7 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import jwt from 'jsonwebtoken';
 
 import '@db/mongoose';
 
@@ -9,7 +8,6 @@ import { signInRouter } from '@routers/auth/sign-in.router';
 import { signUpRouter } from '@routers/auth/sign-up.router';
 
 import { userRouter } from '@routers/user.router';
-import { videogameRouter } from '@routers/videogame.router';
 import { postRouter } from '@routers/post.router';
 import { commentRouter } from '@routers/comment.router';
 
@@ -28,7 +26,6 @@ app.use(cors());
 app.use(signInRouter);
 app.use(signUpRouter);
 app.use(userRouter);
-app.use(videogameRouter);
 app.use(postRouter);
 app.use(commentRouter);
 

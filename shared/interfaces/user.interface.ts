@@ -1,13 +1,15 @@
+import { Post } from "./post.interface";
+
 export interface User {
-    id: string;
     username: string;
     first_name: string;
     last_name: string;
     email: string;
     phone_number: string;
     password: string;
-    followers?: User[];
-    following?: User[];
+    posts?: Post[];
+    followers?: string[];
+    following?: string[];
     created_at: Date;
     updated_at?: Date;
     deleted_at?: Date;
