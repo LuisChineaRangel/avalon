@@ -48,6 +48,7 @@ export class UserService {
     }
 
     async getFollowing(id: string): Promise<string[] | undefined> {
+        console.log(id);
         const user = await lastValueFrom(this.getUser(id));
         return user.following;
     }

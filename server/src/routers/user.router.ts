@@ -82,7 +82,7 @@ userRouter.get("/users/username/:username", auth, async (req, res) => {
         await User.findOne({ username: req.params.username }).then((user) => {
             if (!user)
                 return res.status(404).send("User not found");
-            return res.status(200).send( { username: user.username, first_name: user.first_name, last_name: user.last_name, posts: user.posts, followers: user.followers, following: user.following });
+            return res.status(200).send( { username: user.username, first_name: user.first_name, last_name: user.last_name, posts: user.posts, followers: user.followers, following: user.following, created_at: user.created_at } );
         }).catch((err) => {
             console.log(err);
             return res.status(500).send("Internal server error");

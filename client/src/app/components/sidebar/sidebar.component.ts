@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/material.module';
 
 import { AuthService } from '@services/auth.service';
+import { UserService } from '@services/user.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -13,11 +14,15 @@ import { AuthService } from '@services/auth.service';
 })
 
 export class SidebarComponent implements OnInit {
+    username: string = '';
     title: string = 'Avalon';
 
-    constructor(public auth: AuthService, public router: Router) { }
+    constructor(public auth: AuthService, public router: Router, public userSvc: UserService) { }
 
-    ngOnInit(): void {}
+    async ngOnInit(): Promise<void> {
+        let user = await this.userSvc.getCurrentUser();
+        this.username = user.username;
+    }
 
     logout(): void {
         this.auth.logout();

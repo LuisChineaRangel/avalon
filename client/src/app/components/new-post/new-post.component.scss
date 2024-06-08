@@ -1,0 +1,21 @@
+:host {
+    width: 75%;
+}
+
+.form {
+    display: block;
+    width: 100%;
+}
+
+.fields,
+.fields>* {
+    width: 100%;
+}
+
+#content {
+    height: 10rem;
+}
+
+.actions {
+    align-items: end;
+}

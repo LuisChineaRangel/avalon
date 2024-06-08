@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
 import { MaterialModule } from '@app/material.module';
+
+import { UserService } from '@services/user.service';
 import { PostService } from '@services/post.service';
 
 @Component({
@@ -16,7 +17,7 @@ import { PostService } from '@services/post.service';
 export class NewPostComponent implements OnInit {
     newPostForm: FormGroup;
 
-    constructor(private postSvc: PostService, private router: Router, formBuilder: FormBuilder) {
+    constructor( private userSvc: UserService, private postSvc: PostService, private formBuilder: FormBuilder, private router: Router ) {
         this.newPostForm = formBuilder.group({
             title: ['', Validators.required],
             content: ['', Validators.required],
@@ -26,19 +27,17 @@ export class NewPostComponent implements OnInit {
 
     ngOnInit(): void { }
 
-    newPost(): void {
+    async newPost(): Promise<void> {
         if (this.newPostForm.invalid)
             return;
-        this.postSvc.postPost(this.newPostForm.value)
-            .subscribe({
-                next: (response: any) => {
-                    this.router.navigate(['/']).then(() => {
-                        window.location.reload();
-                    });
-                },
-                error: (error: any) => {
-                    console.log(error);
-                }
-            });
+        let data = this.newPostForm.value;
+        let user = await this.userSvc.getCurrentUser();
+        data.author = user.username;
+        await console.log(data);
+        this.postSvc.postPost(data).subscribe(() => {
+            this.router.navigate(['/']);
+        }, (err) => {
+            console.error(err);
+        });
     }
 }
