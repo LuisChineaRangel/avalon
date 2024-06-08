@@ -17,6 +17,7 @@ export const routes: Routes = [
     { path: 'sign-in', component: SignInComponent },
     { path: 'sign-up', component: SignUpComponent },
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
     { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard] },
     { path: 'new-post', component: NewPostComponent, canActivate: [AuthGuard] },
     { path: 'posts', component: PostsListComponent, canActivate: [AuthGuard] },

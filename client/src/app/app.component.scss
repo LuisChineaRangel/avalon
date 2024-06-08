@@ -1,7 +1,7 @@
 @import "./../styles.scss";
 
 mat-sidenav-container {
-    height: 100vh;
+    min-height: 100vh;
 }
 
 mat-toolbar {
@@ -9,6 +9,7 @@ mat-toolbar {
     height: 10vh;
     z-index: 999999;
     border-bottom: 0.125rem solid var(--black);
+    box-sizing: border-box;
 }
 
 mat-nav-list {
@@ -46,14 +47,6 @@ app-sidebar {
 mat-sidenav-content {
     min-width: 80%;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-mat-sidenav-content .authenticated {
-    margin-top: 10vh;
 }
 
 @media screen and (max-width: 640px) {

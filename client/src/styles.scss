@@ -25,11 +25,40 @@ app-root {
     padding: 0;
 }
 
+.mat-sidenav-content {
+    min-height: 100vh;
+}
+
+.mat-sidenav-content > * {
+    min-height: 100vh;
+    width: 100%;
+}
+
+.mat-sidenav-content > * > * {
+    min-height: 100vh;
+    width: 100%;
+}
+
+.authenticated {
+    min-height: 90vh;
+    margin-top: 10vh !important;
+}
+
+.authenticated > * {
+    min-height: 90vh !important;
+    width: 100% !important;
+}
+
+.authenticated > * > * {
+    min-height: initial !important;
+}
+
 .form {
     display: flex;
     align-items: center;
     justify-content: space-around;
     height: 100%;
+    margin: auto;
 }
 
 .form mat-card {
@@ -70,4 +99,50 @@ app-root {
 
 .form .actions p {
     color: var(--error);
+}
+
+.profile-image-container {
+    position: relative;
+    width: 8rem;
+    height: 8rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
+    box-sizing: border-box !important;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.profile-image-container:hover .overlay {
+    opacity: 1;
+}
+
+.edit-icon {
+    color: white !important;
+    font-size: 3rem !important;
+    width: 50% !important;
+    height: 50% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
 }

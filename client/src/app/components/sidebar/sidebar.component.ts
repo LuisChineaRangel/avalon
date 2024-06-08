@@ -14,15 +14,15 @@ import { UserService } from '@services/user.service';
 })
 
 export class SidebarComponent implements OnInit {
-    username: string = '';
+    username: string = this.auth.getToken().username;
     title: string = 'Avalon';
 
-    constructor(public auth: AuthService, public router: Router, public userSvc: UserService) { }
-
-    async ngOnInit(): Promise<void> {
-        let user = await this.userSvc.getCurrentUser();
+    constructor(public auth: AuthService, public router: Router, public userSvc: UserService) {
+        let user = this.auth.getToken();
         this.username = user.username;
     }
+
+    ngOnInit(): void { }
 
     logout(): void {
         this.auth.logout();

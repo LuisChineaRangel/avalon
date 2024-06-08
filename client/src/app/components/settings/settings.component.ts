@@ -25,7 +25,6 @@ export class SettingsComponent implements OnInit {
         this.user = await this.userSvc.getCurrentUser();
     }
 
-
     save(): void {
         this.editing = false;
         this.userSvc.patchUser(this.user._id, this.user)
@@ -41,5 +40,16 @@ export class SettingsComponent implements OnInit {
 
     cancel(): void {
         this.editing = false;
+    }
+
+    onFileSelected(event: any): void {
+        if (event.target.files && event.target.files[0]) {
+            const file = event.target.files[0];
+
+            const reader = new FileReader();
+            reader.onload = e => this.user.profileImage = reader.result;
+
+            reader.readAsDataURL(file);
+        }
     }
 }

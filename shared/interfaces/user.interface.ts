@@ -7,6 +7,7 @@ export interface User {
     email: string;
     phone_number: string;
     password: string;
+    profileImage: string;
     posts?: Post[];
     followers?: string[];
     following?: string[];
