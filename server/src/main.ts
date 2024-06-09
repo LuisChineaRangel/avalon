@@ -1,6 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import path from 'path';
+import fs from 'fs';
 
 import '@db/mongoose';
 
@@ -13,8 +15,14 @@ import { commentRouter } from '@routers/comment.router';
 
 dotenv.config();
 
-export const app = express();
+const uploadsPath = path.join(__dirname, 'uploads');
 
+if (!fs.existsSync(uploadsPath)) {
+    fs.mkdirSync(uploadsPath);
+    console.log('Uploads directory created');
+}
+
+export const app = express();
 
 app.use(function (_, res, next) {
     res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
@@ -23,6 +31,7 @@ app.use(function (_, res, next) {
     next();
 });
 
+app.use('/uploads', express.static(uploadsPath));
 app.use(cors());
 app.use(signInRouter);
 app.use(signUpRouter);
