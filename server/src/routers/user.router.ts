@@ -1,6 +1,7 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import multer from "multer";
+import path from "path";
 
 import auth from "@middleware/auth";
 
@@ -15,7 +16,8 @@ const storage = multer.diskStorage({
     },
     filename: function (_, file, cb) {
         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-        cb(null, file.fieldname + "-" + uniqueSuffix + ".jpg");
+        const extension = path.extname(file.originalname);
+        cb(null, uniqueSuffix + extension);
     }
 });
 
