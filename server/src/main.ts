@@ -35,6 +35,11 @@ app.use('/uploads', (req, res, next) => {
     console.log('Request to static files:', req.url);
     console.log(fs.existsSync(uploadsPath));
     console.log(fs.existsSync(uploadsPath + req.url));
+    // Displays all files in the uploads directory
+    console.log(fs.readdirSync(uploadsPath));
+    else {
+        next();
+    }
     next();
 }, express.static(uploadsPath));
 app.use(cors());
