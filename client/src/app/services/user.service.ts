@@ -63,6 +63,15 @@ export class UserService {
         const user = await this.getCurrentUser();
         const formData = new FormData();
         formData.append('file', file, file.name);
-        return this.http.post(`${this.userURL}/upload?user=${user.id}`, formData);
+        return this.http.post(`${this.userURL}/upload?user=${user._id}`, formData).subscribe({
+            next: (response: any) => {
+                console.log(response);
+                return response;
+            },
+            error: (error: any) => {
+                console.log(error);
+                return error;
+            }
+        });
     }
 }

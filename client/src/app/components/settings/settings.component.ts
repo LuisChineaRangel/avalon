@@ -44,15 +44,15 @@ export class SettingsComponent implements OnInit {
             document.getElementById('fileInput')?.click();
     }
 
-    uploadImage(): void {
-        console.log(this.file);
+    async uploadImage(): Promise<void> {
         if (this.file) {
-            this.userSvc.uploadImage(this.file).then((response: any) => {
-                this.user.profileImage = response.imageUrl;
-
-            }, error => {
+            try {
+                const response = await this.userSvc.uploadImage(this.file);
+                console.log(response);
+                this.profileImage = response.imageUrl;
+            } catch (error) {
                 console.error('Image upload failed:', error);
-            });
+            }
         }
     }
 
