@@ -2,6 +2,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import multer from "multer";
 import path from "path";
+import fs from "fs";
 
 import auth from "@middleware/auth";
 
@@ -12,10 +13,15 @@ export const userRouter = express.Router();
 
 const storage = multer.diskStorage({
     destination: function (_, __, cb) {
-        cb(null, "uploads/");
+        const dir = 'uploads/';
+        fs.exists(dir, exist => {
+            if (!exist) {
+                return fs.mkdir(dir, { recursive: true }, error => cb(error, dir));
+            }
+            return cb(null, dir);
+        });
     },
     filename: function (_, file, cb) {
-        console.log(file);
         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
         const extension = path.extname(file.originalname);
         cb(null, uniqueSuffix + extension);
@@ -118,7 +124,6 @@ userRouter.get("/users/username/:username", auth, async (req, res) => {
 
 userRouter.post("/users/upload", auth, upload.single('file'), async (req, res) => {
     try {
-        console.log(req.file);
         if (!req.file)
             return res.status(400).send("No file uploaded");
 
