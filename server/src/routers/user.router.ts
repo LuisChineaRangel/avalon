@@ -105,6 +105,7 @@ userRouter.get("/users/username/:username", auth, async (req, res) => {
 
 userRouter.post("/users/upload", auth, upload.single('file'), async (req, res) => {
     try {
+        console.log(req.file);
         if (!req.file)
             return res.status(400).send("No file uploaded");
 
