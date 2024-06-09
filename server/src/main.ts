@@ -31,7 +31,10 @@ app.use(function (_, res, next) {
     next();
 });
 
-app.use('/uploads', express.static(uploadsPath));
+app.use('/uploads', (req, res, next) => {
+    console.log('Request to static files:', req.url);
+    next();
+}, express.static(uploadsPath));
 app.use(cors());
 app.use(signInRouter);
 app.use(signUpRouter);

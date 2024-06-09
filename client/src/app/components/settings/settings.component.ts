@@ -6,6 +6,7 @@ import { MaterialModule } from '@app/material.module';
 
 import { AuthService } from '@services/auth.service';
 import { UserService } from '@app/services/user.service';
+import { SERVER_URL } from '@utils/app.constants';
 
 @Component({
     selector: 'app-settings',
@@ -25,7 +26,7 @@ export class SettingsComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
         this.user = await this.userSvc.getCurrentUser();
-        this.profileImage = this.user.profileImage || 'default-profile-image.jpg';
+        this.profileImage = `${SERVER_URL}${this.user.profileImage}` || 'default-profile-image.jpg';
     }
 
     onFileSelected(event: Event): void {
@@ -48,8 +49,7 @@ export class SettingsComponent implements OnInit {
         if (this.file) {
             try {
                 const response = await this.userSvc.uploadImage(this.file);
-                console.log(response);
-                this.profileImage = response.imageUrl;
+                this.profileImage = `${SERVER_URL}${this.user.profileImage}` || 'default-profile-image.jpg';
             } catch (error) {
                 console.error('Image upload failed:', error);
             }
