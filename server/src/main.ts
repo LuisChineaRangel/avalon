@@ -33,6 +33,8 @@ app.use(function (_, res, next) {
 
 app.use('/uploads', (req, res, next) => {
     console.log('Request to static files:', req.url);
+    console.log(fs.existsSync(uploadsPath));
+    console.log(fs.existsSync(uploadsPath + req.url));
     next();
 }, express.static(uploadsPath));
 app.use(cors());
