@@ -36,7 +36,7 @@ export class UserService {
         return this.http.patch<User>(`${this.userURL}/${id}`, formData);
     }
 
-    async getCurrentUser() : Promise<any> {
+    async getCurrentUser(): Promise<any> {
         let token = this.auth.getToken();
         token = jwtDecode(token);
         if (token && token.id) {
@@ -56,5 +56,13 @@ export class UserService {
     async getFollowers(id: string): Promise<string[] | undefined> {
         const user = await lastValueFrom(this.getUser(id));
         return user.followers;
+    }
+
+
+    async uploadImage(file: File): Promise<any> {
+        const user = await this.getCurrentUser();
+        const formData = new FormData();
+        formData.append('file', file, file.name);
+        return this.http.post(`${this.userURL}/upload?user=${user.id}`, formData).toPromise();
     }
 }

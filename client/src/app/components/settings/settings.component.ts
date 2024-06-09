@@ -18,11 +18,39 @@ export class SettingsComponent implements OnInit {
     token: any;
     user: any = {};
     editing: boolean = false;
+    selectedImage: string | ArrayBuffer | null = null;
+    file: File | null = null;
 
     constructor(public auth: AuthService, public router: Router, public userSvc: UserService) { }
 
     async ngOnInit(): Promise<void> {
         this.user = await this.userSvc.getCurrentUser();
+    }
+
+    onFileSelected(event: Event): void {
+        const target = event.target as HTMLInputElement;
+        const file: File = (target.files as FileList)[0];
+        this.file = file;
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+            this.selectedImage = e.target.result;
+        }
+        reader.readAsDataURL(this.file);
+    }
+
+    editProfileImage(): void {
+        if (this.editing)
+            document.getElementById('fileInput')?.click();
+    }
+
+    uploadImage(): void {
+        if (this.file) {
+            this.userSvc.uploadImage(this.file).subscribe(response => {
+                this.user.profileImage = response.imageUrl;
+            }, error => {
+                console.error('Image upload failed:', error);
+            });
+        }
     }
 
     save(): void {
@@ -40,16 +68,5 @@ export class SettingsComponent implements OnInit {
 
     cancel(): void {
         this.editing = false;
-    }
-
-    onFileSelected(event: any): void {
-        if (event.target.files && event.target.files[0]) {
-            const file = event.target.files[0];
-
-            const reader = new FileReader();
-            reader.onload = e => this.user.profileImage = reader.result;
-
-            reader.readAsDataURL(file);
-        }
     }
 }

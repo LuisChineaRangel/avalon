@@ -5,12 +5,13 @@
         </mat-card-header>
         <mat-card-content>
             <form>
-                <div class="profile-image-container">
+                <div class="profile-image-container" (click)="editProfileImage()" [ngClass]="{'not_editing': !editing}">
                     <img src="logo.png" alt="Profile Image" class="profile-image">
-                    <div class="overlay">
+                    <div class="overlay" *ngIf="editing">
                         <mat-icon class="edit-icon">edit</mat-icon>
                     </div>
                 </div>
+                <input type="file" id="fileInput" style="display: none;" (change)="onFileSelected($event)" accept="image/*">
                 <div>
                     <mat-form-field appearance="fill">
                         <mat-label>Name</mat-label>

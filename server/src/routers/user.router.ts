@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
+import multer from "multer";
 
 import auth from "@middleware/auth";
 
@@ -7,6 +8,8 @@ import User from "@schemas/user.schema";
 import Post from "@schemas/post.schema";
 
 export const userRouter = express.Router();
+
+const upload = multer ({ dest: 'uploads/' });
 
 userRouter.use(bodyParser.json());
 
@@ -90,6 +93,27 @@ userRouter.get("/users/username/:username", auth, async (req, res) => {
                 return res.status(500).send("Internal server error");
             });
             return res.status(200).send({ username: user.username, first_name: user.first_name, last_name: user.last_name, posts: user_posts, followers: user.followers, following: user.following, created_at: user.created_at });
+        }).catch((err) => {
+            console.log(err);
+            return res.status(500).send("Internal server error");
+        });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Internal server error");
+    }
+});
+
+userRouter.post("/users/upload", auth, upload.single("file"), async (req, res) => {
+    try {
+        if (!req.file)
+            return res.status(400).send("No file uploaded");
+        if (!req.params.user)
+            return res.status(401).send("Unauthorized");
+        const imageUrl = `/uploads/${req.file.filename}`;
+        await User.findByIdAndUpdate(req.params.user, { profileImage: imageUrl }).then((user) => {
+            if (!user)
+                return res.status(404).send("User not found");
+            return res.status(200).send({ imageUrl });
         }).catch((err) => {
             console.log(err);
             return res.status(500).send("Internal server error");
