@@ -63,6 +63,6 @@ export class UserService {
         const user = await this.getCurrentUser();
         const formData = new FormData();
         formData.append('file', file, file.name);
-        return this.http.post(`${this.userURL}/upload?user=${user.id}`, formData).toPromise();
+        return this.http.post(`${this.userURL}/upload?user=${user.id}`, formData);
     }
 }

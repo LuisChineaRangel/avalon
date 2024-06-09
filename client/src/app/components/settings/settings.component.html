@@ -6,7 +6,7 @@
         <mat-card-content>
             <form>
                 <div class="profile-image-container" (click)="editProfileImage()" [ngClass]="{'not_editing': !editing}">
-                    <img src="logo.png" alt="Profile Image" class="profile-image">
+                    <img [src]="profileImage" alt="Profile Image" class="profile-image">
                     <div class="overlay" *ngIf="editing">
                         <mat-icon class="edit-icon">edit</mat-icon>
                     </div>
