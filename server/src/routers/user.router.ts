@@ -14,11 +14,16 @@ export const userRouter = express.Router();
 const storage = multer.diskStorage({
     destination: function (_, __, cb) {
         const dir = 'uploads/';
-        fs.exists(dir, exist => {
-            if (!exist) {
-                return fs.mkdir(dir, { recursive: true }, error => cb(error, dir));
+        fs.access(dir, fs.constants.W_OK, (err) => {
+            if (err) {
+                fs.mkdir(dir, { recursive: true }, (err) => {
+                    if (err)
+                        console.log(err);
+                    cb(null, dir);
+                });
+            } else {
+                cb(null, dir);
             }
-            return cb(null, dir);
         });
     },
     filename: function (_, file, cb) {
