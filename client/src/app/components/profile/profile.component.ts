@@ -16,6 +16,7 @@ import { UserService } from '@services/user.service';
 
 export class ProfileComponent implements OnInit {
     user: any = {};
+    profileImage: string | ArrayBuffer | null = 'default-profile-image.jpg';
 
     constructor(private userSvc: UserService, private route: ActivatedRoute) { }
 
@@ -24,13 +25,14 @@ export class ProfileComponent implements OnInit {
         if (username) {
             lastValueFrom(this.userSvc.getProfile(username)).then(user => {
                 this.user = user;
+                this.profileImage = this.user.profileImage || 'default-profile-image.jpg';
             });
         }
         else {
             this.userSvc.getCurrentUser().then(user_data => {
                 lastValueFrom(this.userSvc.getProfile(user_data.username)).then(user => {
                     this.user = user;
-                    console.log(this.user);
+                    this.profileImage = this.user.profileImage || 'default-profile-image.jpg';
                 });
             });
         }
