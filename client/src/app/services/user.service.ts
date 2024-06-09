@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, lastValueFrom } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
@@ -63,16 +63,20 @@ export class UserService {
         const user = await this.getCurrentUser();
         const formData = new FormData();
         formData.append('file', file, file.name);
-        formData.append('userId', user._id);
-        return this.http.post(`${this.userURL}/upload`, formData).subscribe({
-            next: (response: any) => {
-                console.log(response);
-                return response;
-            },
-            error: (error: any) => {
-                console.log(error);
-                return error;
-            }
+
+        const headers = new HttpHeaders().set('userId', user._id);
+
+        return new Promise((resolve, reject) => {
+            this.http.post(`${this.userURL}/upload`, formData, { headers }).subscribe({
+                next: (response: any) => {
+                    console.log(response);
+                    resolve(response);
+                },
+                error: (error: any) => {
+                    console.log(error);
+                    reject(error);
+                }
+            });
         });
     }
 }

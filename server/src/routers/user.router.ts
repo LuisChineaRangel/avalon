@@ -105,23 +105,19 @@ userRouter.get("/users/username/:username", auth, async (req, res) => {
 
 userRouter.post("/users/upload", auth, upload.single('file'), async (req, res) => {
     try {
-        console.log(req.file);
-        console.log(req.body);
         if (!req.file) {
             return res.status(400).send("No file uploaded");
         }
 
-        const userId = req.body.userId;
-        if (!userId) {
+        const userId = req.header('userId');
+        if (!userId)
             return res.status(400).send("User ID is missing");
-        }
 
         const imageUrl = `/uploads/${req.file.filename}`;
         const user = await User.findByIdAndUpdate(userId, { profileImage: imageUrl }, { new: true });
 
-        if (!user) {
+        if (!user)
             return res.status(404).send("User not found");
-        }
 
         res.status(200).send({ imageUrl });
     } catch (err) {
