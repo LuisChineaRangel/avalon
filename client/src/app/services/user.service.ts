@@ -32,7 +32,9 @@ export class UserService {
         return this.http.delete<User>(`${this.userURL}/${id}`);
     }
 
-    patchUser(id: string, formData: FormData): Observable<User> {
+    patchUser(id: string, formData: FormData, file?: File): Observable<User> {
+        if (file)
+            formData.append('file', file, file.name);
         return this.http.patch<User>(`${this.userURL}/${id}`, formData);
     }
 
@@ -47,36 +49,60 @@ export class UserService {
             return null;
     }
 
+    getProfileImage(user: string): string {
+        this.getProfile(user).subscribe(user => {
+            if (user && user.profileImage)
+                return `${SERVER_URL}${user.profileImage}`;
+            return 'default-profile-image.jpg';
+        });
+        return 'default-profile-image.jpg';
+    }
+
     async getFollowing(id: string): Promise<string[] | undefined> {
-        console.log(id);
         const user = await lastValueFrom(this.getUser(id));
         return user.following;
     }
 
-    async getFollowers(id: string): Promise<string[] | undefined> {
-        const user = await lastValueFrom(this.getUser(id));
-        return user.followers;
+    async isFollowing(username: string): Promise<boolean> {
+        let isFollowing = false;
+        await this.getCurrentUser().then(user => {
+            if (user && user.following)
+                isFollowing = user.following.includes(username);
+        });
+        return isFollowing;
     }
 
-
-    async uploadImage(file: File): Promise<any> {
-        const user = await this.getCurrentUser();
-        const formData = new FormData();
-        formData.append('file', file, file.name);
-
-        const headers = new HttpHeaders().set('userId', user._id);
-
-        return new Promise((resolve, reject) => {
-            this.http.post(`${this.userURL}/upload`, formData, { headers }).subscribe({
-                next: (response: any) => {
-                    console.log(response);
-                    resolve(response);
-                },
-                error: (error: any) => {
-                    console.log(error);
-                    reject(error);
-                }
-            });
+    async follow(username: string): Promise<void> {
+        await this.getCurrentUser().then(async user => {
+            if (user) {
+                user.following.push(username);
+                this.patchUser(user._id, user).subscribe({
+                    next: (response: any) => {
+                        return;
+                    },
+                    error: (error: any) => {
+                        console.log(error);
+                    }
+                });
+            }
         });
+        return;
+    }
+
+    async unfollow(username: string): Promise<void> {
+        await this.getCurrentUser().then(async user => {
+            if (user) {
+                user.following = user.following.filter((following: string) => following !== username);
+                this.patchUser(user._id, user).subscribe({
+                    next: (response: any) => {
+                        return;
+                    },
+                    error: (error: any) => {
+                        console.log(error);
+                    }
+                });
+            }
+        });
+        return;
     }
 }

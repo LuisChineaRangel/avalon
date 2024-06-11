@@ -6,7 +6,6 @@ export interface User {
     phone_number: string;
     password: string;
     profileImage: string;
-    followers?: string[];
     following?: string[];
     created_at: Date;
     updated_at?: Date;

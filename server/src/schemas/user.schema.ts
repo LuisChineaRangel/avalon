@@ -9,8 +9,7 @@ const UserSchema = new Schema<User>({
     phone_number: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     profileImage: { type: String },
-    followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    following: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    following: [{ type: String }],
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date },
     deleted_at: { type: Date }

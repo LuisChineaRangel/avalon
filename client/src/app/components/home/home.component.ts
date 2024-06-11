@@ -1,19 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { jwtDecode } from 'jwt-decode';
+import { Router, RouterModule } from '@angular/router';
 
 import { Post } from '@shared/interfaces/post.interface';
 import { UserService } from '@services/user.service';
 import { PostService } from '@services/post.service';
-import { SidebarComponent } from '@components/sidebar/sidebar.component';
 import { AuthService } from '@services/auth.service';
 import { MaterialModule } from '@app/material.module';
 
+import { SERVER_URL } from '@utils/app.constants';
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [CommonModule, MaterialModule, SidebarComponent, RouterModule, RouterOutlet],
+    imports: [CommonModule, MaterialModule, RouterModule],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss'
 })
@@ -21,11 +20,30 @@ import { MaterialModule } from '@app/material.module';
 export class HomeComponent implements OnInit {
     token: any;
     user: any = {};
-    feed: Post[] = [];
+    feed: any[] = [];
 
-    constructor(public auth: AuthService, public router: Router, private userSvc: UserService, private postSvc: PostService) { }
+    constructor(private userSvc: UserService, private postSvc: PostService) { }
 
-    async ngOnInit(): Promise<void> {
-        this.user = await this.userSvc.getCurrentUser();
+    ngOnInit(): void {
+        this.userSvc.getCurrentUser().then(user => {
+            if (user.following.length > 0)
+                this.postSvc.getFeed(user.following).subscribe((posts: Post[]) => {
+                    this.feed = posts;
+                    this.feed.forEach(post => {
+                        this.userSvc.getProfile(post.author).subscribe(profile => {
+                            post.profileImage = profile.profileImage ? `${SERVER_URL}${profile.profileImage}` : 'default-profile-image.jpg';
+                        });
+                    });
+                    this.feed.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+                });
+        });
+    }
+
+    getProfileImage(user: string): any {
+        this.userSvc.getProfile(user).subscribe(user => {
+            if (user && user.profileImage)
+                return `${SERVER_URL}${user.profileImage}`;
+            return 'default-profile-image.jpg';
+        });
     }
 }

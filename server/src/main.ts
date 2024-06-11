@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
+import ncp from 'ncp';
 
 import '@db/mongoose';
 
@@ -15,12 +16,10 @@ import { commentRouter } from '@routers/comment.router';
 
 dotenv.config();
 
-const uploadsPath = path.join(__dirname, 'uploads');
+let uploadsPath = path.join(__dirname, '..', 'uploads');
 
-if (!fs.existsSync(uploadsPath)) {
+if (!fs.existsSync(uploadsPath))
     fs.mkdirSync(uploadsPath);
-    console.log('Uploads directory created');
-}
 
 export const app = express();
 
@@ -32,11 +31,6 @@ app.use(function (_, res, next) {
 });
 
 app.use('/uploads', (req, res, next) => {
-    console.log('Request to static files:', req.url);
-    console.log(fs.existsSync(uploadsPath));
-    console.log(fs.existsSync(uploadsPath + req.url));
-    // Displays all files in the uploads directory
-    console.log(fs.readdirSync(uploadsPath));
     next();
 }, express.static(uploadsPath));
 app.use(cors());

@@ -33,4 +33,8 @@ export class PostService {
     patchPost(id: string, formData: FormData): Observable<Post> {
         return this.http.patch<Post>(`${this.postURL}/${id}`, formData);
     }
+
+    getFeed(users: string[]): Observable<Post[]> {
+        return this.http.get<Post[]>(`${SERVER_URL}/feed`, { params: { users } });
+    }
 }

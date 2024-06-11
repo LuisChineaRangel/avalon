@@ -1,3 +1,11 @@
-div.container {
-    padding: 5rem 8rem;
+@import '../../../styles.scss';
+
+mat-card {
+    border-bottom: 0.005rem solid var(--black);
+    border-radius: 0;
+}
+
+.example-header-image img {
+    width: 100%;
+    height: auto;
 }

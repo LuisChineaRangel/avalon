@@ -22,7 +22,6 @@ export const routes: Routes = [
     { path: 'new-post', component: NewPostComponent, canActivate: [AuthGuard] },
     { path: 'posts', component: PostsListComponent, canActivate: [AuthGuard] },
     { path: 'following', component: FollowingComponent, canActivate: [AuthGuard]},
-    { path: 'followers', component: FollowingComponent, canActivate: [AuthGuard]},
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];

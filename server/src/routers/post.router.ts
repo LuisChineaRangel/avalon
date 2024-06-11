@@ -1,9 +1,9 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import jwt from 'jsonwebtoken';
 
 import auth from "@middleware/auth";
 
+import User from '@schemas/user.schema';
 import Post from '@schemas/post.schema';
 
 export const postRouter = express.Router();
@@ -15,7 +15,9 @@ postRouter.get('/posts', auth, async (_, res) => {
         await Post.find().then((posts) => {
             if (!posts)
                 return res.status(404).send('No posts found');
-            posts.sort((a, b) => a.title.localeCompare(b.title));
+            posts.sort((a, b) => {
+                return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+            });
             return res.status(200).send(posts);
         }).catch((err) => {
             console.log(err);
@@ -86,5 +88,24 @@ postRouter.patch('/posts/:id', auth, async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).send('Internal server error');
+    }
+});
+
+postRouter.get('/feed', auth, async (req, res) => {
+    try {
+        const { users } = req.query;
+        const posts = await Post.find({ author: { $in: users } });
+
+        if (!posts.length) {
+            return res.status(404).send('No posts found');
+        }
+
+        posts.sort((a, b) => {
+            return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        });
+        return res.status(200).send(posts);
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('Internal server error');
     }
 });

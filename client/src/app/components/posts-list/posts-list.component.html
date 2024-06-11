@@ -2,10 +2,12 @@
     <div class="post" *ngFor="let post of posts">
         <mat-card>
             <mat-card-header>
-                <div mat-card-avatar class="example-header-image"></div>
+                <div mat-card-avatar class="example-header-image">
+                    <img [src]="post.profileImage" alt="{{ post.author }}">
+                </div>
                 <mat-card-title>{{ post.title }}</mat-card-title>
                 <mat-card-subtitle>By
-                    <a [routerLink]="['/profile', post.author]">
+                    <a href="/profile/{{ post.author }}">
                         {{ post.author }}
                     </a>
                     on {{ post.created_at | date:'medium' }}</mat-card-subtitle>

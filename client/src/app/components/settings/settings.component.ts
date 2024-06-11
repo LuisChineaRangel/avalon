@@ -26,7 +26,10 @@ export class SettingsComponent implements OnInit {
 
     async ngOnInit(): Promise<void> {
         this.user = await this.userSvc.getCurrentUser();
-        this.profileImage = `${SERVER_URL}${this.user.profileImage}` || 'default-profile-image.jpg';
+        if (!this.user.profileImage)
+            this.profileImage = 'default-profile-image.jpg';
+        else
+            this.profileImage = `${SERVER_URL}${this.user.profileImage}`;
     }
 
     onFileSelected(event: Event): void {
@@ -45,24 +48,15 @@ export class SettingsComponent implements OnInit {
             document.getElementById('fileInput')?.click();
     }
 
-    async uploadImage(): Promise<void> {
-        if (this.file) {
-            try {
-                const response = await this.userSvc.uploadImage(this.file);
-                this.profileImage = `${SERVER_URL}${this.user.profileImage}` || 'default-profile-image.jpg';
-            } catch (error) {
-                console.error('Image upload failed:', error);
-            }
-        }
-    }
-
     async save(): Promise<void> {
         this.editing = false;
-        await this.uploadImage();
-        this.userSvc.patchUser(this.user._id, this.user)
+        let data = new FormData();
+        for (let key in this.user)
+                data.append(key, this.user[key]);
+        this.userSvc.patchUser(this.user._id, data, this.file as File)
             .subscribe({
                 next: (response: any) => {
-                    // window.location.reload();
+                    window.location.reload();
                 },
                 error: (error: any) => {
                     console.log(error);
