@@ -14,28 +14,40 @@ import { SERVER_URL } from '@utils/app.constants';
     standalone: true,
     imports: [CommonModule, MaterialModule, RouterModule],
     templateUrl: './home.component.html',
-    styleUrl: './home.component.scss'
+    styleUrl: './home.component.scss',
 })
-
 export class HomeComponent implements OnInit {
     token: any;
     user: any = {};
     feed: any[] = [];
 
-    constructor(private userSvc: UserService, private postSvc: PostService) { }
+    constructor(
+        private userSvc: UserService,
+        private postSvc: PostService
+    ) {}
 
     ngOnInit(): void {
         this.userSvc.getCurrentUser().then(user => {
             if (user.following.length > 0)
-                this.postSvc.getFeed(user.following).subscribe((posts: Post[]) => {
-                    this.feed = posts;
-                    this.feed.forEach(post => {
-                        this.userSvc.getProfile(post.author).subscribe(profile => {
-                            post.profileImage = profile.profileImage ? `${SERVER_URL}${profile.profileImage}` : 'default-profile-image.jpg';
+                this.postSvc
+                    .getFeed(user.following)
+                    .subscribe((posts: Post[]) => {
+                        this.feed = posts;
+                        this.feed.forEach(post => {
+                            this.userSvc
+                                .getProfile(post.author)
+                                .subscribe(profile => {
+                                    post.profileImage = profile.profileImage
+                                        ? `${SERVER_URL}${profile.profileImage}`
+                                        : 'default-profile-image.jpg';
+                                });
                         });
+                        this.feed.sort(
+                            (a, b) =>
+                                new Date(b.created_at).getTime() -
+                                new Date(a.created_at).getTime()
+                        );
                     });
-                    this.feed.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-                });
         });
     }
 

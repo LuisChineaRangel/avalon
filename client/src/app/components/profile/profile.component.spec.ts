@@ -1,4 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { MaterialModule } from '@app/material.module';
+import { provideHttpClient } from '@angular/common/http';
 
 import { ProfileComponent } from './profile.component';
 
@@ -8,9 +12,9 @@ describe('ProfileComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [ProfileComponent]
-        })
-            .compileComponents();
+            imports: [CommonModule, RouterModule.forRoot([]), MaterialModule],
+            providers: [provideHttpClient()],
+        }).compileComponents();
 
         fixture = TestBed.createComponent(ProfileComponent);
         component = fixture.componentInstance;

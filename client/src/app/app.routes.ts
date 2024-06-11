@@ -17,12 +17,24 @@ export const routes: Routes = [
     { path: 'sign-in', component: SignInComponent },
     { path: 'sign-up', component: SignUpComponent },
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
-    { path: 'profile/:username', component: ProfileComponent, canActivate: [AuthGuard] },
+    { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+    {
+        path: 'profile/:username',
+        component: ProfileComponent,
+        canActivate: [AuthGuard],
+    },
     { path: 'new-post', component: NewPostComponent, canActivate: [AuthGuard] },
     { path: 'posts', component: PostsListComponent, canActivate: [AuthGuard] },
-    { path: 'following', component: FollowingComponent, canActivate: [AuthGuard]},
-    { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
+    {
+        path: 'following',
+        component: FollowingComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: 'settings',
+        component: SettingsComponent,
+        canActivate: [AuthGuard],
+    },
     { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 
@@ -30,5 +42,4 @@ export const routes: Routes = [
     imports: [RouterModule],
     exports: [RouterModule, RouterOutlet],
 })
-
-export class AppRoutingModule { }
+export class AppRoutingModule {}

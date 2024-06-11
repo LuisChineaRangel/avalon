@@ -1,7 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+    FormBuilder,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
 
 import { AuthService } from '@services/auth.service';
 import { MaterialModule } from '@app/material.module';
@@ -11,9 +16,8 @@ import { MaterialModule } from '@app/material.module';
     standalone: true,
     imports: [CommonModule, ReactiveFormsModule, MaterialModule, RouterModule],
     templateUrl: './sign-in.component.html',
-    styleUrl: './sign-in.component.scss'
+    styleUrl: './sign-in.component.scss',
 })
-
 export class SignInComponent implements OnInit {
     hide: boolean = true;
     signInForm: FormGroup;
@@ -24,14 +28,18 @@ export class SignInComponent implements OnInit {
         { label: 'Password', name: 'password' },
     ];
 
-    constructor(private auth: AuthService, private router: Router, formBuilder: FormBuilder) {
+    constructor(
+        private auth: AuthService,
+        private router: Router,
+        formBuilder: FormBuilder
+    ) {
         this.signInForm = formBuilder.group({
             email: ['', Validators.required],
-            password: ['', Validators.required]
+            password: ['', Validators.required],
         });
     }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {}
 
     signIn(): void {
         if (this.signInForm.invalid) {
@@ -39,18 +47,17 @@ export class SignInComponent implements OnInit {
             return;
         }
 
-        this.auth.signIn(this.signInForm.value)
-            .subscribe({
-                next: (response: any) => {
-                    localStorage.setItem('token', response.token);
-                    this.router.navigate(['/']).then(() => {
-                        window.location.reload();
-                    });
-                },
-                error: (error: any) => {
-                    this.error_message = error.error.message;
-                    console.log(error);
-                }
-            });
+        this.auth.signIn(this.signInForm.value).subscribe({
+            next: (response: any) => {
+                localStorage.setItem('token', response.token);
+                this.router.navigate(['/']).then(() => {
+                    window.location.reload();
+                });
+            },
+            error: (error: any) => {
+                this.error_message = error.error.message;
+                console.log(error);
+            },
+        });
     }
 }

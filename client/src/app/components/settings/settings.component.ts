@@ -11,9 +11,16 @@ import { SERVER_URL } from '@utils/app.constants';
 @Component({
     selector: 'app-settings',
     standalone: true,
-    imports: [CommonModule, MaterialModule, RouterModule, RouterOutlet, FormsModule, ReactiveFormsModule],
+    imports: [
+        CommonModule,
+        MaterialModule,
+        RouterModule,
+        RouterOutlet,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
     templateUrl: './settings.component.html',
-    styleUrl: './settings.component.scss'
+    styleUrl: './settings.component.scss',
 })
 export class SettingsComponent implements OnInit {
     token: any;
@@ -22,14 +29,17 @@ export class SettingsComponent implements OnInit {
     profileImage: string | ArrayBuffer | null = 'default-profile-image.jpg';
     file: File | null = null;
 
-    constructor(public auth: AuthService, public router: Router, public userSvc: UserService) { }
+    constructor(
+        public auth: AuthService,
+        public router: Router,
+        public userSvc: UserService
+    ) {}
 
     async ngOnInit(): Promise<void> {
         this.user = await this.userSvc.getCurrentUser();
         if (!this.user.profileImage)
             this.profileImage = 'default-profile-image.jpg';
-        else
-            this.profileImage = `${SERVER_URL}${this.user.profileImage}`;
+        else this.profileImage = `${SERVER_URL}${this.user.profileImage}`;
     }
 
     onFileSelected(event: Event): void {
@@ -39,28 +49,27 @@ export class SettingsComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = (e: any) => {
             this.profileImage = e.target.result;
-        }
+        };
         reader.readAsDataURL(this.file);
     }
 
     editProfileImage(): void {
-        if (this.editing)
-            document.getElementById('fileInput')?.click();
+        if (this.editing) document.getElementById('fileInput')?.click();
     }
 
     async save(): Promise<void> {
         this.editing = false;
         let data = new FormData();
-        for (let key in this.user)
-                data.append(key, this.user[key]);
-        this.userSvc.patchUser(this.user._id, data, this.file as File)
+        for (let key in this.user) data.append(key, this.user[key]);
+        this.userSvc
+            .patchUser(this.user._id, data, this.file as File)
             .subscribe({
                 next: (response: any) => {
                     window.location.reload();
                 },
                 error: (error: any) => {
                     console.log(error);
-                }
+                },
             });
     }
 

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -17,10 +18,17 @@ describe('SignUpComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CommonModule, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule],
-            providers: [AuthService, provideHttpClient()]
-        })
-            .compileComponents();
+            imports: [
+                CommonModule,
+                ReactiveFormsModule,
+                MatCardModule,
+                MatFormFieldModule,
+                MatInputModule,
+                BrowserAnimationsModule,
+                RouterModule.forRoot([]),
+            ],
+            providers: [AuthService, provideHttpClient()],
+        }).compileComponents();
 
         fixture = TestBed.createComponent(SignUpComponent);
         component = fixture.componentInstance;

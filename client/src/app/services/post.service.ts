@@ -6,13 +6,12 @@ import { Post } from '@shared/interfaces/post.interface';
 import { SERVER_URL } from 'src/utils/app.constants';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
-
 export class PostService {
     private postURL = `${SERVER_URL}/posts`;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     getPosts(): Observable<Post[]> {
         return this.http.get<Post[]>(this.postURL);
@@ -35,6 +34,8 @@ export class PostService {
     }
 
     getFeed(users: string[]): Observable<Post[]> {
-        return this.http.get<Post[]>(`${SERVER_URL}/feed`, { params: { users } });
+        return this.http.get<Post[]>(`${SERVER_URL}/feed`, {
+            params: { users },
+        });
     }
 }

@@ -14,7 +14,7 @@ describe('AppComponent', () => {
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
             imports: [CommonModule, RouterOutlet],
-            providers: [AuthService, provideHttpClient()]
+            providers: [AuthService, provideHttpClient()],
         }).compileComponents();
 
         fixture = TestBed.createComponent(AppComponent);
@@ -24,14 +24,9 @@ describe('AppComponent', () => {
     }));
 
     it('should create the app', () => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.componentInstance;
-        expect(app).toBeTruthy();
+        expect(component).toBeTruthy();
     });
-
     it(`should have the 'Avalon' title`, () => {
-        const fixture = TestBed.createComponent(AppComponent);
-        const app = fixture.componentInstance;
-        expect(app.title).toEqual('Avalon');
+        expect(component.title).toEqual('Avalon');
     });
 });

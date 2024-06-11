@@ -12,9 +12,8 @@ describe('HomeComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [],
-            providers: [AuthService, provideHttpClient()]
-        })
-            .compileComponents();
+            providers: [AuthService, provideHttpClient()],
+        }).compileComponents();
 
         fixture = TestBed.createComponent(HomeComponent);
         component = fixture.componentInstance;

@@ -11,15 +11,17 @@ import { UserService } from '@services/user.service';
     standalone: true,
     imports: [CommonModule, RouterModule, MaterialModule],
     templateUrl: './following.component.html',
-    styleUrl: './following.component.scss'
+    styleUrl: './following.component.scss',
 })
-
 export class FollowingComponent implements OnInit {
     user: any = {};
     following: string[] = [];
     followingProfiles: any[] = [];
 
-    constructor(private auth: AuthService, private userSvc: UserService) { }
+    constructor(
+        private auth: AuthService,
+        private userSvc: UserService
+    ) {}
 
     async ngOnInit(): Promise<void> {
         this.user = await this.userSvc.getCurrentUser();

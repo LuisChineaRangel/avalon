@@ -14,19 +14,24 @@ import { SERVER_URL } from '@utils/app.constants';
     standalone: true,
     imports: [CommonModule, MaterialModule, RouterModule],
     templateUrl: './posts-list.component.html',
-    styleUrl: './posts-list.component.scss'
+    styleUrl: './posts-list.component.scss',
 })
 export class PostsListComponent implements OnInit {
     posts: any[] = [];
 
-    constructor(private postSvc: PostService, private userSvc: UserService) { }
+    constructor(
+        private postSvc: PostService,
+        private userSvc: UserService
+    ) {}
 
     ngOnInit(): void {
         this.postSvc.getPosts().subscribe((result: Post[]) => {
             this.posts = result;
             this.posts.forEach(element => {
                 this.userSvc.getProfile(element.author).subscribe(user => {
-                    element.profileImage = user.profileImage ? `${SERVER_URL}${user.profileImage}` : 'default-profile-image.jpg';
+                    element.profileImage = user.profileImage
+                        ? `${SERVER_URL}${user.profileImage}`
+                        : 'default-profile-image.jpg';
                 });
             });
         });

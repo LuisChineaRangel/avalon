@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SignInComponent } from '@components/auth/sign-in/sign-in.component';
 import { AuthService } from '@services/auth.service';
+import { RouterModule } from '@angular/router';
 
 describe('SignInComponent', () => {
     let component: SignInComponent;
@@ -17,10 +18,17 @@ describe('SignInComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [CommonModule, ReactiveFormsModule, MatCardModule, MatFormFieldModule, MatInputModule, BrowserAnimationsModule],
-            providers: [AuthService, provideHttpClient()]
-        })
-            .compileComponents();
+            imports: [
+                CommonModule,
+                ReactiveFormsModule,
+                MatCardModule,
+                MatFormFieldModule,
+                MatInputModule,
+                BrowserAnimationsModule,
+                RouterModule.forRoot([]),
+            ],
+            providers: [AuthService, provideHttpClient()],
+        }).compileComponents();
 
         fixture = TestBed.createComponent(SignInComponent);
         component = fixture.componentInstance;

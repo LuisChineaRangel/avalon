@@ -3,16 +3,22 @@
         <mat-card>
             <mat-card-header>
                 <div mat-card-avatar class="example-header-image">
-                    <img [src]="post.profileImage" alt="{{ post.author }}">
+                    <img [src]="post.profileImage" alt="{{ post.author }}" />
                 </div>
                 <mat-card-title>{{ post.title }}</mat-card-title>
-                <mat-card-subtitle>By
+                <mat-card-subtitle
+                    >By
                     <a href="/profile/{{ post.author }}">
                         {{ post.author }}
                     </a>
-                    on {{ post.created_at | date:'medium' }}</mat-card-subtitle>
+                    on {{ post.created_at | date: 'medium' }}</mat-card-subtitle
+                >
             </mat-card-header>
-            <img mat-card-image *ngIf="post.featured_image" [src]="post.featured_image" alt="{{ post.title }}">
+            <img
+                mat-card-image
+                *ngIf="post.featured_image"
+                [src]="post.featured_image"
+                alt="{{ post.title }}" />
             <mat-card-content>
                 <p>{{ post.content }}</p>
             </mat-card-content>

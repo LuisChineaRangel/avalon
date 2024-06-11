@@ -8,13 +8,15 @@ import { SERVER_URL } from 'src/utils/app.constants';
 import { AuthService } from './auth.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
-
 export class UserService {
     private userURL = `${SERVER_URL}/users`;
 
-    constructor(private http: HttpClient, private auth: AuthService) { }
+    constructor(
+        private http: HttpClient,
+        private auth: AuthService
+    ) {}
 
     private getUsers(): Observable<User[]> {
         return this.http.get<User[]>(this.userURL);
@@ -33,8 +35,7 @@ export class UserService {
     }
 
     patchUser(id: string, formData: FormData, file?: File): Observable<User> {
-        if (file)
-            formData.append('file', file, file.name);
+        if (file) formData.append('file', file, file.name);
         return this.http.patch<User>(`${this.userURL}/${id}`, formData);
     }
 
@@ -44,9 +45,7 @@ export class UserService {
         if (token && token.id) {
             const user = await lastValueFrom(this.getUser(token.id));
             return user;
-        }
-        else
-            return null;
+        } else return null;
     }
 
     getProfileImage(user: string): string {
@@ -82,7 +81,7 @@ export class UserService {
                     },
                     error: (error: any) => {
                         console.log(error);
-                    }
+                    },
                 });
             }
         });
@@ -92,14 +91,16 @@ export class UserService {
     async unfollow(username: string): Promise<void> {
         await this.getCurrentUser().then(async user => {
             if (user) {
-                user.following = user.following.filter((following: string) => following !== username);
+                user.following = user.following.filter(
+                    (following: string) => following !== username
+                );
                 this.patchUser(user._id, user).subscribe({
                     next: (response: any) => {
                         return;
                     },
                     error: (error: any) => {
                         console.log(error);
-                    }
+                    },
                 });
             }
         });

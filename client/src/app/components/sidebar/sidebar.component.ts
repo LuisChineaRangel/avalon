@@ -10,16 +10,22 @@ import { UserService } from '@services/user.service';
     standalone: true,
     imports: [MaterialModule, RouterModule],
     templateUrl: './sidebar.component.html',
-    styleUrl: './sidebar.component.scss'
+    styleUrl: './sidebar.component.scss',
 })
-
 export class SidebarComponent implements OnInit {
-    username: string = this.auth.getToken().username;
+    username: string | undefined;
     title: string = 'Avalon';
 
-    constructor(public auth: AuthService, public router: Router, public userSvc: UserService) {
-        let user = this.auth.getToken();
-        this.username = user.username;
+    constructor(
+        public auth: AuthService,
+        public router: Router,
+        public userSvc: UserService
+    ) {
+        const user = this.auth.getToken();
+        if (user)
+            this.username = user.username;
+        else
+            this.username = undefined;
     }
 
     ngOnInit(): void { }

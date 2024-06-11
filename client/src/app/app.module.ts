@@ -8,13 +8,8 @@ import { AuthService } from '@services/auth.service';
 
 @NgModule({
     declarations: [],
-    imports: [
-        CommonModule,
-        AppRoutingModule,
-        MaterialModule,
-        SidebarComponent
-    ],
+    imports: [CommonModule, AppRoutingModule, MaterialModule, SidebarComponent],
     exports: [CommonModule, AppRoutingModule, MaterialModule, SidebarComponent],
-    providers: [AuthService]
+    providers: [AuthService],
 })
-export class AppModule { }
+export class AppModule {}
