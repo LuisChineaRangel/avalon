@@ -45,7 +45,7 @@ module.exports = function (config) {
                     '--enable-features=NetworkService',
                 ],
             },
-        }
+        },
         restartOnFileChange: true
     });
 };
