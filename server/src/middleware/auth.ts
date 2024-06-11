@@ -9,7 +9,6 @@ export default function auth(req: RequestWithUser, res: Response, next: NextFunc
     const authHeader = req.header("Authorization");
     if (!authHeader)
         return res.status(401).send("Access denied. No token provided.");
-
     const jwtToken = authHeader.split(' ')[1];
 
     if (!jwtToken)

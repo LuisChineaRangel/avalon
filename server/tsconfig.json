@@ -1,5 +1,5 @@
 {
-	"exclude": ["./tests", "./node_modules", "./dist"],
+	"exclude": ["src/tests", "./node_modules", "./dist"],
 	"compilerOptions": {
 		"target": "ES2022",
 		"module": "commonjs",
@@ -14,12 +14,12 @@
 		"skipLibCheck": true,
         "paths": {
             "@shared/*": ["../shared/*"],
-            "@api/*": ["./src/api/*"],
+            "@src/*": ["./src/*"],
             "@db/*": ["./src/db/*"],
             "@schemas/*": ["./src/schemas/*"],
             "@middleware/*": ["./src/middleware/*"],
             "@routers/*": ["./src/routers/*"],
         }
 	},
-    "include": ["src/**/*", "../shared/**/*"]
+    "include": ["src/**/*", "../shared/**/*", "tests"]
 }

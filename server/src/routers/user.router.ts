@@ -51,7 +51,6 @@ userRouter.get("/users", auth, async (_, res) => {
             return res.status(500).send("Internal server error");
         });
     } catch (err) {
-        console.log(err);
         res.status(500).send("Internal server error");
     }
 });
