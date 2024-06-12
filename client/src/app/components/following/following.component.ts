@@ -6,6 +6,8 @@ import { MaterialModule } from '@app/material.module';
 import { AuthService } from '@services/auth.service';
 import { UserService } from '@services/user.service';
 
+import { SERVER_URL } from '@utils/app.constants';
+
 @Component({
     selector: 'app-following',
     standalone: true,
@@ -15,13 +17,12 @@ import { UserService } from '@services/user.service';
 })
 export class FollowingComponent implements OnInit {
     user: any = {};
-    following: string[] = [];
-    followingProfiles: any[] = [];
+    following: any[] = [];
 
     constructor(
         private auth: AuthService,
         private userSvc: UserService
-    ) {}
+    ) { }
 
     async ngOnInit(): Promise<void> {
         this.user = await this.userSvc.getCurrentUser();
@@ -29,11 +30,14 @@ export class FollowingComponent implements OnInit {
     }
 
     async getFollowing(): Promise<void> {
+        let followingProfiles = [];
         let following = await this.userSvc.getFollowing(this.user._id);
         if (following) {
             for (let i = 0; i < following.length; i++) {
-                let profile = await this.userSvc.getProfile(following[i]);
-                this.followingProfiles.push(profile);
+                await this.userSvc.getProfile(following[i]).subscribe(profile => {
+                    console.log(profile);
+                    this.following.push({ username: following[i], profileImage: `${SERVER_URL}${profile.profileImage}` });
+                });
             }
         }
     }

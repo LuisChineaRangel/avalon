@@ -1,5 +1,5 @@
 <mat-toolbar *ngIf="isAuthenticated">
-    <button mat-icon-button (click)="opened = !opened">
+    <button mat-icon-button (click)="toggleSidebar()">
         <mat-icon>menu</mat-icon>
     </button>
     <mat-nav-list>
@@ -11,7 +11,7 @@
                 *ngIf="isDarkTheme" />
             <img
                 matListItemIcon
-                src="logo-black.png"
+                src="logo-white.png"
                 alt="Avalon"
                 *ngIf="!isDarkTheme" />
             <span>{{ title }}</span>

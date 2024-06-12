@@ -1,12 +1,14 @@
 @import './../../../styles.scss';
 
 :host {
-    --sidebar-link: var(--black);
+    --sidebar-link: var(--white);
+    background-color: var(--secondary);
 }
 
 mat-nav-list {
     padding-top: 0;
     width: 100%;
+
 }
 
 a {
@@ -18,4 +20,17 @@ a {
 
 a mat-icon {
     margin-right: 0.5rem;
+    color: var(--sidebar-link);
+}
+
+a span {
+    color: var(--sidebar-link);
+}
+
+a:hover mat-icon, a:hover span {
+    color: var(--secondary);
+}
+
+a:hover {
+    background-color: var(--white);
 }

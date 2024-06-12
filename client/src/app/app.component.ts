@@ -22,6 +22,12 @@ export class AppComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
+        this.opened = localStorage.getItem('opened') === 'true' ? true : false;
         if (this.auth.loggedIn()) this.isAuthenticated = true;
+    }
+
+    toggleSidebar(): void {
+        this.opened = !this.opened;
+        localStorage.setItem('opened', this.opened.toString());
     }
 }

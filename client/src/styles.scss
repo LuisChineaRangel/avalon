@@ -6,6 +6,9 @@
 
     --error: rgba(244, 67, 54, 1);
 
+    --primary: rgba(156, 141, 195, 1);
+    --secondary: rgba(73, 68, 84, 1);
+
     font-family:
         'Inter',
         -apple-system,
@@ -38,14 +41,19 @@ app-root {
     min-height: 100vh;
 }
 
-.mat-sidenav-content > * {
+.mat-sidenav-content>* {
     min-height: 100vh;
     width: 100%;
 }
 
-.mat-sidenav-content > * > * {
+.mat-sidenav-content>*>* {
     min-height: 100vh;
     width: 100%;
+}
+
+.mat-mdc-card-avatar {
+    width: 3rem;
+    height: 3rem;
 }
 
 .authenticated {
@@ -53,12 +61,12 @@ app-root {
     margin-top: 10vh !important;
 }
 
-.authenticated > * {
+.authenticated>* {
     min-height: 90vh !important;
     width: 100% !important;
 }
 
-.authenticated > * > * {
+.authenticated>*>* {
     min-height: initial !important;
 }
 
@@ -90,8 +98,8 @@ app-root {
     justify-content: center;
 }
 
-.form .fields > *,
-.form .actions > * {
+.form .fields>*,
+.form .actions>* {
     margin: 0.5rem;
 }
 
@@ -154,4 +162,12 @@ app-root {
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
+}
+
+a:visited {
+    color: inherit;
+}
+
+a:hover {
+    opacity: 0.6156;
 }

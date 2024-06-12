@@ -18,10 +18,22 @@ mat-card {
 .profile-image-container {
     width: 8rem;
     height: 8rem;
+    margin-right: 2.5rem;
     cursor: initial;
 }
 
 .example-header-image img {
     width: 100%;
     height: auto;
+}
+
+@media screen and (max-width: 640px) {
+    .profile-card {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    .profile-image-container {
+        margin-right: 0;
+    }
 }

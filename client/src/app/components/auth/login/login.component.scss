@@ -4,14 +4,24 @@
     justify-content: space-around;
     padding: 0 10%;
     width: initial;
+    background-image: url('./../../../../../public/background.jpg');
+    background-size: cover;
 }
 
 .banner mat-card {
     padding: 2rem;
+    box-shadow: 0 0.5rem 4rem rgba(0, 0, 0, 0.4);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .logo-container img {
-    max-width: 25rem;
+    max-width: 25vw;
+    margin-right: 3rem;
 }
 
 .summary {
@@ -25,5 +35,10 @@ mat-card-actions > * {
 @media screen and (max-width: 640px) {
     .banner {
         flex-direction: column;
+    }
+
+    .logo-container img {
+        max-width: 80%;
+        margin-right: 0;
     }
 }

@@ -3,9 +3,8 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import path from 'path';
 import fs from 'fs';
-import ncp from 'ncp';
 
-import '@db/mongoose';
+import connectToMongoDB from '@db/mongoose';
 
 import { signInRouter } from '@routers/auth/sign-in.router';
 import { signUpRouter } from '@routers/auth/sign-up.router';
@@ -45,4 +44,5 @@ if (require.main === module) {
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`);
     });
+    connectToMongoDB();
 }
