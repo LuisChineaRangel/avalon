@@ -34,7 +34,7 @@ jobs:
 
             - name: Run client tests
               working-directory: client
-              run: ng test --code-coverage --watch=false --browsers=ChromeHeadless
+              run: ng test --configuration=ci --watch=false --browsers=ChromeHeadless
 
             - name: Check client coverage report
               working-directory: client
@@ -43,9 +43,10 @@ jobs:
                     echo "Error: lcov.info not found"
                     exit 1
                   fi
-                  cat coverage/lcov.info
+                  cat coverage/lcov.info  # Display content for verification
 
             - name: Upload client coverage to Coveralls
+              if: success() # Only upload coverage if previous steps were successful
               working-directory: client
               run: cat coverage/lcov.info | ./node_modules/.bin/coveralls
               env:
@@ -67,9 +68,10 @@ jobs:
                     echo "Error: lcov.info not found"
                     exit 1
                   fi
-                  cat coverage/lcov.info
+                  cat coverage/lcov.info  # Display content for verification
 
             - name: Upload server coverage to Coveralls
+              if: success() # Only upload coverage if previous steps were successful
               working-directory: server
               run: cat coverage/lcov.info | ./node_modules/.bin/coveralls
               env:
