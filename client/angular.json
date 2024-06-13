@@ -101,10 +101,7 @@
                         ],
                         "scripts": [],
                         "karmaConfig": "karma.conf.js",
-                        "codeCoverage": true,
-                        "coverageReporters": [
-                            "lcov"
-                        ]
+                        "codeCoverage": true
                     },
                     "configurations": {
                         "ci": {
