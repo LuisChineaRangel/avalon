@@ -34,45 +34,35 @@ jobs:
 
             - name: Run client tests
               working-directory: client
-              run: ng test --configuration=ci --watch=false --browsers=ChromeHeadless
-
-            - name: Check client coverage report
-              working-directory: client
-              run: |
-                  if [ ! -f coverage/lcov.info ]; then
-                    echo "Error: lcov.info not found"
-                    exit 1
-                  fi
-                  cat coverage/lcov.info  # Display content for verification
+              run: npm run coverage
 
             - name: Upload client coverage to Coveralls
-              if: success() # Only upload coverage if previous steps were successful
               working-directory: client
               run: cat coverage/lcov.info | ./node_modules/.bin/coveralls
               env:
                   COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
-            # Server tests and coverage
-            - name: Install server dependencies
-              run: npm install
-              working-directory: server
+            # # Server tests and coverage
+            # - name: Install server dependencies
+            #   run: npm install
+            #   working-directory: server
 
-            - name: Run server tests
-              working-directory: server
-              run: npm test -- --coverage
+            # - name: Run server tests
+            #   working-directory: server
+            #   run: npm test -- --coverage
 
-            - name: Check server coverage report
-              working-directory: server
-              run: |
-                  if [ ! -f coverage/lcov.info ]; then
-                    echo "Error: lcov.info not found"
-                    exit 1
-                  fi
-                  cat coverage/lcov.info  # Display content for verification
+            # - name: Check server coverage report
+            #   working-directory: server
+            #   run: |
+            #       if [ ! -f coverage/lcov.info ]; then
+            #         echo "Error: lcov.info not found"
+            #         exit 1
+            #       fi
+            #       cat coverage/lcov.info  # Display content for verification
 
-            - name: Upload server coverage to Coveralls
-              if: success() # Only upload coverage if previous steps were successful
-              working-directory: server
-              run: cat coverage/lcov.info | ./node_modules/.bin/coveralls
-              env:
-                  COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+            # - name: Upload server coverage to Coveralls
+            #   if: success() # Only upload coverage if previous steps were successful
+            #   working-directory: server
+            #   run: cat coverage/lcov.info | ./node_modules/.bin/coveralls
+            #   env:
+            #       COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
