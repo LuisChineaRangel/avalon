@@ -1,14 +1,14 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 
-import auth from "@middleware/auth";
+import auth from "@middleware/auth.js";
 
-import User from '@schemas/user.schema';
-import Post from '@schemas/post.schema';
+import User from '@schemas/user.schema.js';
+import Post from '@schemas/post.schema.js';
 
 export const postRouter = express.Router();
 
-postRouter.use(bodyParser.json());
+postRouter.use(express.json());
 
 postRouter.get('/posts', auth, async (_, res) => {
     try {

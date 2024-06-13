@@ -4,12 +4,18 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-import auth from "@middleware/auth";
+import auth from "@middleware/auth.js";
 
-import User from "@schemas/user.schema";
-import Post from "@schemas/post.schema";
+import User from "@schemas/user.schema.js";
+import Post from "@schemas/post.schema.js";
 
 export const userRouter = express.Router();
+
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const uploadsPath = path.join(__dirname, '..', '..', 'uploads');
 
@@ -37,7 +43,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-userRouter.use(bodyParser.json());
+userRouter.use(express.json());
 
 userRouter.get("/users", auth, async (_, res) => {
     try {
@@ -117,7 +123,7 @@ userRouter.patch("/users/:id", auth, upload.single('file'), async (req, res) => 
         data.updated_at = new Date().toISOString();
         if (data.following === '')
             data.following = [];
-        else if (data.following.includes(''))
+        else if (data.following)
             data.following = data.following.filter((user: string) => user !== '');
         await User.findByIdAndUpdate
             (req.params.id, data

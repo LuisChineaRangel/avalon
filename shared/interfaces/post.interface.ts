@@ -1,10 +1,7 @@
-import { Comment } from './comment.interface';
-
-export interface Post {
+export interface PostInterface {
     author: string;
     title: string;
     content: string;
-    comments?: Comment[];
     featured_image?: string;
     created_at: Date;
     updated_at?: Date;

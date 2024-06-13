@@ -35,7 +35,6 @@ export class FollowingComponent implements OnInit {
         if (following) {
             for (let i = 0; i < following.length; i++) {
                 await this.userSvc.getProfile(following[i]).subscribe(profile => {
-                    console.log(profile);
                     this.following.push({ username: following[i], profileImage: `${SERVER_URL}${profile.profileImage}` });
                 });
             }

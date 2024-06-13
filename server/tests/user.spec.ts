@@ -1,65 +1,47 @@
-import request from 'supertest';
 import { describe } from 'mocha';
 import { expect } from 'chai';
-import mongoose from 'mongoose';
-import { MongoMemoryServer } from 'mongodb-memory-server';
 
-import { app } from '@src/main';
-import User from '@src/schemas/user.schema';
+import { request, app } from './tests-setup';
+import { UserInterface } from '@shared/interfaces/user.interface';
+import User from '@schemas/user.schema';
+import mongoose from 'mongoose';
 
 let token: string;
-let mongoServer: MongoMemoryServer;
 
 before(async () => {
-    mongoServer = await MongoMemoryServer.create();
-    const uri = mongoServer.getUri();
-
-    await mongoose.connect(uri);
-});
-
-after(async () => {
-    await mongoose.disconnect();
-    await mongoServer.stop();
+    const response = await request(app)
+        .post('/sign-up')
+        .send({
+            username: "TestUser",
+            first_name: "Test",
+            last_name: "User",
+            email: "test@example.com",
+            phone_number: "123456789",
+            password: "password123"
+        })
+    token = response.body.token;
 });
 
 describe('User API', () => {
-    it('should sign up a new user', async () => {
+    it ('should get all users', async () => {
         const response = await request(app)
-            .post('/sign-up')
-            .send({
-                username: "Jhonny",
-                first_name: "John",
-                last_name: "Doe",
-                email: "john.doe@example.com",
-                phone_number: "123456789",
-                password: "password123"
-            })
-            .expect(201);
-        token = response.body.token;
-        const user = await User.findOne({ username: "Jhonny" });
-        expect(user).to.not.be.null;
-        expect(user!.username).to.equal('Jhonny');
-        expect(user!.first_name).to.equal('John');
-        expect(user!.last_name).to.equal('Doe');
-        expect(user!.email).to.equal('john.doe@example.com');
-        expect(user!.phone_number).to.equal('123456789');
+            .get('/users')
+            .set('Authorization', `Bearer ${token}`)
+            .expect(200);
+        expect(response.body).to.be.an('array');
     });
-
-    it('should not sign up a new user with the same email', async () => {
-        await request(app)
-            .post('/sign-up')
-            .send({
-                username: "Jhonny",
-                first_name: "John",
-                last_name: "Doe",
-                email: "john.doe@example.com",
-                phone_number: "123456789",
-                password: "password123"
-            })
-            .expect(409);
+    it('should get user information by id', async () => {
+        const user: any = await User.findOne({ username: "TestUser" });
+        const id = user!._id;
+        const response = await request(app)
+            .get(`/users/${id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .expect(200);
+        expect(response.body.username).to.equal('TestUser');
+        expect(response.body.first_name).to.equal('Test');
+        expect(response.body.last_name).to.equal('User');
     });
-
-    it('should get user profile', async () => {
+    it('should get user information by username', async () => {
         const response = await request(app)
             .get('/users/username/Jhonny')
             .set('Authorization', `Bearer ${token}`)
@@ -67,5 +49,37 @@ describe('User API', () => {
         expect(response.body.username).to.equal('Jhonny');
         expect(response.body.first_name).to.equal('John');
         expect(response.body.last_name).to.equal('Doe');
+    });
+    it('should update user information', async () => {
+        const user: any = await User.findOne({ username: "TestUser" });
+        user!.first_name = 'Johnny';
+        user!.last_name = 'Doe';
+        const id = user!._id;
+        const response = await request(app)
+            .patch(`/users/${id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .send(user)
+        expect(response.body.username).to.equal('TestUser');
+        expect(response.body.first_name).to.equal('Johnny');
+        expect(response.body.last_name).to.equal('Doe');
+    });
+    it('should delete user', async () => {
+        const user: any = await User.findOne({ username: "TestUser" });
+        const id = user!._id;
+        const response = await request(app)
+            .delete(`/users/${id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .expect(200);
+        expect(response.body.username).to.equal('TestUser');
+        expect(response.body.first_name).to.equal('Johnny');
+        expect(response.body.last_name).to.equal('Doe');
+    });
+    it('should not delete non-existing user', async () => {
+        const id = new mongoose.Types.ObjectId();
+        const response = await request(app)
+            .delete(`/users/${id}`)
+            .set('Authorization', `Bearer ${token}`)
+            .expect(404);
+        expect(response.text).to.equal('User not found');
     });
 });

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
-import { Post } from '@shared/interfaces/post.interface';
+import { PostInterface } from '@shared/interfaces/post.interface';
 import { UserService } from '@services/user.service';
 import { PostService } from '@services/post.service';
 import { AuthService } from '@services/auth.service';
@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
             if (user.following.length > 0)
                 this.postSvc
                     .getFeed(user.following)
-                    .subscribe((posts: Post[]) => {
+                    .subscribe((posts: PostInterface[]) => {
                         this.feed = posts;
                         this.feed.forEach(post => {
                             this.userSvc

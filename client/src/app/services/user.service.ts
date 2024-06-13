@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, lastValueFrom } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
-import { User } from '@shared/interfaces/user.interface';
+import { UserInterface } from '@shared/interfaces/user.interface';
 import { SERVER_URL } from 'src/utils/app.constants';
 import { AuthService } from './auth.service';
 
@@ -18,25 +18,25 @@ export class UserService {
         private auth: AuthService
     ) {}
 
-    private getUsers(): Observable<User[]> {
-        return this.http.get<User[]>(this.userURL);
+    private getUsers(): Observable<UserInterface[]> {
+        return this.http.get<UserInterface[]>(this.userURL);
     }
 
-    private getUser(id: string): Observable<User> {
-        return this.http.get<User>(`${this.userURL}/${id}`);
+    private getUser(id: string): Observable<UserInterface> {
+        return this.http.get<UserInterface>(`${this.userURL}/${id}`);
     }
 
-    getProfile(username: string): Observable<User> {
-        return this.http.get<User>(`${this.userURL}/username/${username}`);
+    getProfile(username: string): Observable<UserInterface> {
+        return this.http.get<UserInterface>(`${this.userURL}/username/${username}`);
     }
 
-    deleteUser(id: string): Observable<User> {
-        return this.http.delete<User>(`${this.userURL}/${id}`);
+    deleteUser(id: string): Observable<UserInterface> {
+        return this.http.delete<UserInterface>(`${this.userURL}/${id}`);
     }
 
-    patchUser(id: string, formData: FormData, file?: File): Observable<User> {
+    patchUser(id: string, formData: FormData, file?: File): Observable<UserInterface> {
         if (file) formData.append('file', file, file.name);
-        return this.http.patch<User>(`${this.userURL}/${id}`, formData);
+        return this.http.patch<UserInterface>(`${this.userURL}/${id}`, formData);
     }
 
     async getCurrentUser(): Promise<any> {

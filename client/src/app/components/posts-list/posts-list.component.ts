@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '@app/material.module';
 
-import { Post } from '@shared/interfaces/post.interface';
+import { PostInterface } from '@shared/interfaces/post.interface';
 import { PostService } from '@services/post.service';
 import { UserService } from '@services/user.service';
 
@@ -25,7 +25,7 @@ export class PostsListComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.postSvc.getPosts().subscribe((result: Post[]) => {
+        this.postSvc.getPosts().subscribe((result: PostInterface[]) => {
             this.posts = result;
             this.posts.forEach(element => {
                 this.userSvc.getProfile(element.author).subscribe(user => {

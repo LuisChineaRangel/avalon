@@ -2,11 +2,11 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
 
-import User from "@schemas/user.schema";
+import User from "@schemas/user.schema.js";
 
 export const signUpRouter = express.Router();
 
-signUpRouter.use(bodyParser.json());
+signUpRouter.use(express.json());
 
 signUpRouter.post('/sign-up', async (req, res) => {
     const body = req.body;

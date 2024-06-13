@@ -2,11 +2,11 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
 
-import User from "@schemas/user.schema";
+import User from "@schemas/user.schema.js";
 
 export const signInRouter = express.Router();
 
-signInRouter.use(bodyParser.json());
+signInRouter.use(express.json());
 
 signInRouter.post('/sign-in', async (req, res) => {
     const { email, password } = req.body;
