@@ -1,4 +1,4 @@
-name: Coveralls
+name: CI
 
 on:
     push:
@@ -7,58 +7,52 @@ on:
         branches: [main]
 
 jobs:
-    coveralls-server:
+    build:
         runs-on: ubuntu-latest
 
-        steps:
-            - name: Cloning repo
-              uses: actions/checkout@v2
-
-            - name: Use Node.js 20.x for Server Side
-              uses: actions/setup-node@v2
-              with:
-                  node-version: 20.x
-
-            - name: Installing dependencies
-              run: npm install
-              working-directory: ./server
-
-            - name: Generating coverage information
-              run: npm run coveralls
-              working-directory: ./server
-
-            - name: Coveralls GitHub Action
-              uses: coverallsapp/github-action@v2.3.0
-              with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
-                  path-to-lcov: ./server/coverage/lcov.info
-
-    coveralls-client:
-        runs-on: ubuntu-latest
+        strategy:
+            matrix:
+                node-version: [18.x, 20.x]
 
         steps:
-            - name: Cloning repo
-              uses: actions/checkout@v2
+            - name: Checkout repository
+              uses: actions/checkout@v3
 
-            - name: Use Node.js 20.x for Client Side
-              uses: actions/setup-node@v2
+            - name: Set up Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v3
               with:
-                  node-version: 20.x
+                  node-version: ${{ matrix.node-version }}
 
+            # Client tests and coverage
             - name: Install Angular CLI
               run: npm install -g @angular/cli
               working-directory: client
 
-            - name: Installing dependencies
+            - name: Install client dependencies
               run: npm install
-              working-directory: ./client
+              working-directory: client
 
-            - name: Generating coverage information
-              run: npm run coveralls
-              working-directory: ./client
+            - name: Run client tests
+              working-directory: client
+              run: ng test --code-coverage --watch=false --browsers=ChromeHeadless
 
-            - name: Coveralls GitHub Action
-              uses: coverallsapp/github-action@v2.3.0
-              with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
-                  path-to-lcov: ./client/coverage/lcov.info
+            - name: Upload client coverage to Coveralls
+              run: cat ./client/coverage/lcov.info | ./node_modules/.bin/coveralls
+              working-directory: client
+              env:
+                  COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
+            # Server tests and coverage
+            - name: Install server dependencies
+              run: npm install
+              working-directory: server
+
+            - name: Run server tests
+              working-directory: server
+              run: npm test -- --coverage
+
+            - name: Upload server coverage to Coveralls
+              run: cat ./server/coverage/lcov.info | ./node_modules/.bin/coveralls
+              working-directory: server
+              env:
+                  COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
