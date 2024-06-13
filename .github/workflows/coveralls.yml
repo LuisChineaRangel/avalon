@@ -36,9 +36,18 @@ jobs:
               working-directory: client
               run: ng test --code-coverage --watch=false --browsers=ChromeHeadless
 
-            - name: Upload client coverage to Coveralls
-              run: cat ./client/coverage/lcov.info | ./node_modules/.bin/coveralls
+            - name: Check client coverage report
               working-directory: client
+              run: |
+                  if [ ! -f coverage/lcov.info ]; then
+                    echo "Error: lcov.info not found"
+                    exit 1
+                  fi
+                  cat coverage/lcov.info
+
+            - name: Upload client coverage to Coveralls
+              working-directory: client
+              run: cat coverage/lcov.info | ./node_modules/.bin/coveralls
               env:
                   COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
@@ -51,8 +60,17 @@ jobs:
               working-directory: server
               run: npm test -- --coverage
 
-            - name: Upload server coverage to Coveralls
-              run: cat ./server/coverage/lcov.info | ./node_modules/.bin/coveralls
+            - name: Check server coverage report
               working-directory: server
+              run: |
+                  if [ ! -f coverage/lcov.info ]; then
+                    echo "Error: lcov.info not found"
+                    exit 1
+                  fi
+                  cat coverage/lcov.info
+
+            - name: Upload server coverage to Coveralls
+              working-directory: server
+              run: cat coverage/lcov.info | ./node_modules/.bin/coveralls
               env:
                   COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
