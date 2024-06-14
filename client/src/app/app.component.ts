@@ -19,11 +19,13 @@ export class AppComponent implements OnInit {
     constructor(
         public auth: AuthService,
         public router: Router
-    ) {}
+    ) { }
 
     ngOnInit(): void {
         this.opened = localStorage.getItem('opened') === 'true' ? true : false;
-        if (this.auth.loggedIn()) this.isAuthenticated = true;
+        this.auth.isAuthenticated().subscribe(isAuthenticated => {
+            this.isAuthenticated = isAuthenticated;
+        });
     }
 
     toggleSidebar(): void {

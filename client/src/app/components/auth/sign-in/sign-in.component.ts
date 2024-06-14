@@ -50,6 +50,7 @@ export class SignInComponent implements OnInit {
         this.auth.signIn(this.signInForm.value).subscribe({
             next: (response: any) => {
                 localStorage.setItem('token', response.token);
+                this.auth.setAuthenticated(true);
                 this.router.navigate(['/']).then(() => {
                     //window.location.reload();
                 });

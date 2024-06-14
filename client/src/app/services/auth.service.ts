@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { SERVER_URL } from 'src/utils/app.constants';
 
@@ -7,6 +8,7 @@ import { SERVER_URL } from 'src/utils/app.constants';
     providedIn: 'root',
 })
 export class AuthService {
+    private isAuthenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     private signUpUrl = `${SERVER_URL}/sign-up`;
     private signInUrl = `${SERVER_URL}/sign-in`;
 
@@ -30,6 +32,15 @@ export class AuthService {
 
     logout(): void {
         localStorage.removeItem('token');
+        this.setAuthenticated(false);
         //window.location.reload();
+    }
+
+    isAuthenticated(): Observable<boolean> {
+        return this.isAuthenticatedSubject.asObservable();
+    }
+
+    setAuthenticated(isAuthenticated: boolean) {
+        this.isAuthenticatedSubject.next(isAuthenticated);
     }
 }
