@@ -123,7 +123,7 @@ userRouter.patch("/users/:id", auth, upload.single('file'), async (req, res) => 
         data.updated_at = new Date().toISOString();
         if (data.following === '')
             data.following = [];
-        else if (data.following)
+        else if (Array.isArray(data.following))
             data.following = data.following.filter((user: string) => user !== '');
         await User.findByIdAndUpdate
             (req.params.id, data
