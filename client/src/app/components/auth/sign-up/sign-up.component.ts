@@ -56,6 +56,7 @@ export class SignUpComponent implements OnInit {
                 localStorage.setItem('token', response.token);
                 this.auth.setAuthenticated(true);
                 this.router.navigate(['/']).then(() => {
+                    this.router.navigateByUrl('/');
                     //window.location.reload();
                 });
             },
