@@ -65,7 +65,7 @@ export class SettingsComponent implements OnInit {
             .patchUser(this.user._id, data, this.file as File)
             .subscribe({
                 next: (response: any) => {
-                    window.location.reload();
+                    //window.location.reload();
                 },
                 error: (error: any) => {
                     console.log(error);

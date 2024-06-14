@@ -30,6 +30,6 @@ export class AuthService {
 
     logout(): void {
         localStorage.removeItem('token');
-        window.location.reload();
+        //window.location.reload();
     }
 }
