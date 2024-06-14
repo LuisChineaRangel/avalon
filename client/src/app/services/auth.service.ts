@@ -1,20 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Router } from '@angular/router';
 
 import { SERVER_URL } from 'src/utils/app.constants';
-import { routes } from '@app/app.routes';
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
-    private isAuthenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
     private signUpUrl = `${SERVER_URL}/sign-up`;
     private signInUrl = `${SERVER_URL}/sign-in`;
 
-    constructor(private http: HttpClient, private router: Router) {}
+    constructor(private http: HttpClient) {}
 
     signUp(userData: FormData) {
         return this.http.post<any>(this.signUpUrl, userData);
@@ -34,16 +30,6 @@ export class AuthService {
 
     logout(): void {
         localStorage.removeItem('token');
-        this.setAuthenticated(false);
-        this.router.navigateByUrl('/');
-        //window.location.reload();
-    }
-
-    isAuthenticated(): Observable<boolean> {
-        return this.isAuthenticatedSubject.asObservable();
-    }
-
-    setAuthenticated(isAuthenticated: boolean) {
-        this.isAuthenticatedSubject.next(isAuthenticated);
+        window.location.reload();
     }
 }
